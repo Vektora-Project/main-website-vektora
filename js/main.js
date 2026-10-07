@@ -239,18 +239,14 @@
     const tl = gsap.timeline({ scrollTrigger: { ...st, toggleActions: "play none none none" } });
     const bars = $$(".bars i", card);
     const rooms = $$(".rooms span", card);
-    const sched = $$(".sched span", card);
     const line = $(".line__stroke", card);
     if (bars.length) tl.from(bars, { scaleY: 0, duration: 1, stagger: 0.06, ease: "expo.out" }, 0);
     if (rooms.length) tl.from(rooms, { scale: 0, duration: 0.5, stagger: { each: 0.015, from: "random" }, ease: "back.out(2)" }, 0);
-    if (sched.length) tl.from(sched, { y: 10, opacity: 0, duration: 0.5, stagger: 0.03, ease: "expo.out" }, 0);
     if (line) {
       const len = line.getTotalLength();
       tl.fromTo(line, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 0);
       tl.from($(".line__area", card), { opacity: 0, duration: 1 }, 0.6);
     }
-    const prog = $(".progress i", card);
-    if (prog) tl.from(prog, { scaleX: 0, duration: 1.4, ease: "expo.out" }, 0.2);
     $$("[data-count]", card).forEach((el) => countUp(el, tl));
     const cta = $$(".cta-big span", card);
     if (cta.length) tl.from(cta, { yPercent: 60, opacity: 0, duration: 1, stagger: 0.1, ease: "expo.out" }, 0);
