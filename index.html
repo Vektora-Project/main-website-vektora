@@ -34,6 +34,7 @@
     </a>
     <nav class="nav__links" aria-label="Navigasi utama">
       <a href="#karya">Karya</a>
+      <a href="#produk">Produk</a>
       <a href="#layanan">Layanan</a>
       <a href="#proses">Proses</a>
       <a href="#kontak">Kontak</a>
@@ -44,6 +45,7 @@
 
   <div class="mobile-menu" aria-hidden="true">
     <a href="#karya">Karya</a>
+    <a href="#produk">Produk</a>
     <a href="#layanan">Layanan</a>
     <a href="#proses">Proses</a>
     <a href="#kontak">Kontak</a>
@@ -97,6 +99,7 @@
       <div class="hero__meta">
         <ul>
           <li><a href="#karya">Karya</a></li>
+          <li><a href="#produk">Produk</a></li>
           <li><a href="#layanan">Layanan</a></li>
           <li><a href="#proses">Proses</a></li>
         </ul>
@@ -171,40 +174,48 @@
             <small class="card__disc">Tampilan ilustratif · data bukan data asli</small>
           </article>
 
-          <!-- 02 DASHBOARD -->
-          <article class="card card--blue" data-cursor="Demo">
+          <!-- 02 SISTEM KAS & PELANGGAN (demo asli: /demo/sistem-kas-pelanggan/) -->
+          <article class="card card--blue" data-cursor="Coba">
             <div class="card__top">
               <span class="card__num">02</span>
-              <span class="tag">Demo produk</span>
+              <span class="tag tag--demo"><i></i>Demo · bisa dicoba</span>
             </div>
-            <div class="mock mock--dash">
-              <div class="mock__bar"><i></i><i></i><i></i><span>ops-dashboard / multi-outlet</span></div>
-              <div class="mock__body mock__body--col">
-                <div class="kpis kpis--4">
-                  <div><small>Penjualan</small><strong>128<em>jt</em></strong></div>
-                  <div><small>Outlet</small><strong>6</strong></div>
-                  <div><small>Stok kritis</small><strong>12</strong></div>
-                  <div><small>Growth</small><strong>+9<em>%</em></strong></div>
-                </div>
-                <svg class="line" viewBox="0 0 300 110" preserveAspectRatio="none">
-                  <path class="line__area" d="M0 90 L30 80 L60 84 L90 62 L120 68 L150 48 L180 55 L210 34 L240 40 L270 22 L300 26 L300 110 L0 110Z" />
-                  <path class="line__stroke" d="M0 90 L30 80 L60 84 L90 62 L120 68 L150 48 L180 55 L210 34 L240 40 L270 22 L300 26" />
-                </svg>
-                <div class="table"><span></span><span></span><span></span><span></span></div>
-              </div>
-            </div>
+            <a class="mock mock--shot" href="demo/sistem-kas-pelanggan/" aria-label="Buka demo Sistem Kas dan Pelanggan">
+              <div class="mock__bar"><i></i><i></i><i></i><span>vektoraproject.com/demo/sistem-kas-pelanggan</span></div>
+              <img src="demo/img/sistem-kas-pelanggan.jpg" alt="Tangkapan layar demo: ringkasan kas masuk dan keluar serta daftar follow-up pelanggan" width="1440" height="900" loading="lazy" />
+            </a>
             <div class="card__info">
-              <h3>Dashboard Operasional</h3>
-              <p>Rekap penjualan dan stok dari beberapa outlet dalam satu layar — pengganti rekap manual di spreadsheet. Bisa disambungkan ke sistem yang sudah dipakai.</p>
-              <ul class="chips"><li>Integrasi</li><li>Laporan</li><li>Multi-outlet</li></ul>
+              <h3>Kas &amp; Pelanggan</h3>
+              <p>Untuk distributor dan grosir: data pelanggan dengan harga khusus, catatan follow-up, kas masuk dan keluar, ekspor Excel, serta hak akses Admin, Finance, dan Owner.</p>
+              <ul class="chips"><li>Aplikasi Web</li><li>Keuangan</li><li>Pelanggan</li></ul>
+              <a href="demo/sistem-kas-pelanggan/" class="pill pill--light magnetic"><span>Coba demo</span></a>
             </div>
-            <small class="card__disc">Demo · data ilustratif · bukan implementasi klien</small>
+            <small class="card__disc">Demo · data contoh · bukan implementasi klien</small>
           </article>
 
-          <!-- 03 BIMBEL -->
-          <article class="card card--ice" data-cursor="Konsep">
+          <!-- 03 DASHBOARD BISNIS CUSTOM (demo asli: /demo/dashboard-bisnis-custom/) -->
+          <article class="card card--paper" data-cursor="Coba">
             <div class="card__top">
               <span class="card__num">03</span>
+              <span class="tag tag--demo"><i></i>Demo · bisa dicoba</span>
+            </div>
+            <a class="mock mock--shot" href="demo/dashboard-bisnis-custom/" aria-label="Buka demo Dashboard Bisnis Custom">
+              <div class="mock__bar"><i></i><i></i><i></i><span>vektoraproject.com/demo/dashboard-bisnis-custom</span></div>
+              <img src="demo/img/dashboard-bisnis-custom.jpg" alt="Tangkapan layar demo: ringkasan produksi harian, pesanan berjalan, dan pengajuan yang menunggu persetujuan" width="1440" height="900" loading="lazy" />
+            </a>
+            <div class="card__info">
+              <h3>Dashboard Custom</h3>
+              <p>Contoh aplikasi internal untuk konveksi: hasil produksi dicatat dari HP, pengajuan disetujui berjenjang, dan laporan mingguan per tim. Alurnya dibuat sesuai cara kerja usaha.</p>
+              <ul class="chips"><li>Pencatatan</li><li>Persetujuan</li><li>Laporan</li></ul>
+              <a href="demo/dashboard-bisnis-custom/" class="pill pill--dark magnetic"><span>Coba demo</span></a>
+            </div>
+            <small class="card__disc">Demo · data contoh · bukan implementasi klien</small>
+          </article>
+
+          <!-- 04 BIMBEL -->
+          <article class="card card--ice" data-cursor="Konsep">
+            <div class="card__top">
+              <span class="card__num">04</span>
               <span class="tag">Dalam pengembangan</span>
             </div>
             <div class="mock mock--bimbel">
@@ -227,10 +238,10 @@
             <small class="card__disc">Konsep · sedang dikembangkan</small>
           </article>
 
-          <!-- 04 CTA -->
+          <!-- 05 CTA -->
           <article class="card card--cta" data-cursor="Halo!">
             <div class="card__top">
-              <span class="card__num">04</span>
+              <span class="card__num">05</span>
               <span class="tag tag--open"><i></i>Slot terbuka</span>
             </div>
             <div class="cta-big">
@@ -248,10 +259,56 @@
       <div class="works__progress" aria-hidden="true"><i></i></div>
     </section>
 
+    <!-- PRODUCTS
+         Satu <article class="prod"> = satu produk. Untuk produk yang bisa dibeli langsung
+         (mis. template), isi harga di .prod__price dan arahkan tombol utama ke halaman
+         pembayaran (Mayar, Lynk.id, Shopee, dll.). Lihat README bagian "Produk". -->
+    <section class="products" id="produk">
+      <div class="products__head">
+        <p class="eyebrow">(02) — Produk</p>
+        <h2 class="title split">Coba dulu, baru bicara</h2>
+        <p class="products__note">Produk yang bisa Anda pesan atau beli. Aplikasi bisa dicoba langsung lewat demo, tanpa daftar dan tanpa instal.</p>
+      </div>
+      <div class="prod-grid">
+        <article class="prod">
+          <div class="prod__top"><span class="prod__type">Aplikasi web</span><span class="tag tag--demo"><i></i>Bisa dipesan</span></div>
+          <h3>Sistem Kas &amp; Pelanggan</h3>
+          <p>Untuk UMKM distributor dan grosir. Data pelanggan dan harga khusus, catatan follow-up, kas masuk dan keluar, ekspor Excel, serta hak akses Admin, Finance, dan Owner.</p>
+          <ul class="prod__list"><li>Impor data awal dibantu tim</li><li>Pelatihan pengguna</li><li>Bisa dibuka di laptop dan HP</li></ul>
+          <div class="prod__price"><small>Harga</small><span>Dijelaskan setelah konsultasi</span></div>
+          <div class="prod__cta">
+            <a class="pill pill--light magnetic" href="demo/sistem-kas-pelanggan/"><span>Coba demo</span></a>
+            <a class="pill pill--line magnetic" href="https://wa.me/6281998888967?text=Halo%20Vektora%2C%20saya%20tertarik%20dengan%20Sistem%20Kas%20dan%20Pelanggan." target="_blank" rel="noopener"><span>Konsultasi</span></a>
+          </div>
+        </article>
+        <article class="prod">
+          <div class="prod__top"><span class="prod__type">Dibuat khusus</span><span class="tag tag--demo"><i></i>Bisa dipesan</span></div>
+          <h3>Aplikasi &amp; Dashboard Custom</h3>
+          <p>Aplikasi internal dan dashboard sesuai alur kerja usaha Anda, untuk pencatatan, persetujuan, dan laporan operasional.</p>
+          <ul class="prod__list"><li>Dimulai dari pemetaan proses</li><li>Pelatihan pengguna</li><li>Dukungan setelah sistem berjalan</li></ul>
+          <div class="prod__price"><small>Harga</small><span>Disusun setelah pemetaan proses</span></div>
+          <div class="prod__cta">
+            <a class="pill pill--light magnetic" href="demo/dashboard-bisnis-custom/"><span>Coba demo</span></a>
+            <a class="pill pill--line magnetic" href="https://wa.me/6281998888967?text=Halo%20Vektora%2C%20saya%20ingin%20konsultasi%20aplikasi%20atau%20dashboard%20custom." target="_blank" rel="noopener"><span>Konsultasi</span></a>
+          </div>
+        </article>
+        <article class="prod prod--soon">
+          <div class="prod__top"><span class="prod__type">Produk digital</span><span class="tag"><i></i>Segera hadir</span></div>
+          <h3>Template Siap Pakai</h3>
+          <p>Template Google Sheets dan Excel untuk pencatatan usaha, disusun dari sistem yang kami bangun. Bisa dibeli dan langsung dipakai, tanpa konsultasi.</p>
+          <ul class="prod__list"><li>Petunjuk pemakaian berbahasa Indonesia</li><li>Bisa dipakai di laptop dan HP</li></ul>
+          <div class="prod__price"><small>Harga</small><span>Diumumkan saat rilis</span></div>
+          <div class="prod__cta">
+            <a class="pill pill--line magnetic" href="https://wa.me/6281998888967?text=Halo%20Vektora%2C%20kabari%20saya%20saat%20template%20siap%20pakai%20dirilis." target="_blank" rel="noopener"><span>Kabari saya</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- SERVICES -->
     <section class="services" id="layanan">
       <div class="services__head">
-        <p class="eyebrow">(02) — Layanan</p>
+        <p class="eyebrow">(03) — Layanan</p>
         <h2 class="title split">Mulai dari proses, baru sistemnya.</h2>
       </div>
       <ol class="svc">
@@ -279,7 +336,7 @@
     <!-- PROCESS -->
     <section class="process" id="proses">
       <div class="process__head">
-        <p class="eyebrow">(03) — Cara kerja</p>
+        <p class="eyebrow">(04) — Cara kerja</p>
         <h2 class="title split">Dari kebutuhan ke sistem yang dipakai</h2>
       </div>
       <div class="steps">
@@ -308,7 +365,7 @@
   <footer class="footer" id="kontak">
     <div class="footer__top">
       <div class="footer__form">
-        <p class="eyebrow">(04) — Kontak</p>
+        <p class="eyebrow">(05) — Kontak</p>
         <h2 class="footer__title">Mari tinjau kebutuhan teknis bersama.</h2>
         <form class="form" id="contactForm">
           <label><span>Nama Anda</span><input name="nama" required autocomplete="name" /></label>
@@ -339,6 +396,7 @@
     <div class="hero__meta footer__meta">
       <ul>
         <li><a href="#karya">Karya</a></li>
+        <li><a href="#produk">Produk</a></li>
         <li><a href="#layanan">Layanan</a></li>
         <li><a href="#proses">Proses</a></li>
       </ul>
