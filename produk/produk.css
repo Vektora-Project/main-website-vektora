@@ -227,6 +227,88 @@ ul, ol { padding: 0; list-style: none; }
 .foot a { text-decoration: none; }
 .foot a:hover { color: var(--accent); }
 
+/* ---------- katalog (/produk/) ---------- */
+.cat-jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.cat-jump a {
+  display: inline-flex; align-items: center; gap: 12px;
+  height: 44px; padding: 0 18px;
+  border-radius: 999px; border: 1.5px solid var(--line);
+  font: 700 12px/1 var(--body); letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color .3s, color .3s;
+}
+.cat-jump a:hover { border-color: var(--accent); color: var(--accent); }
+.cat-jump b { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+.cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.prod {
+  min-width: 0;
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--ink-2);
+  border: 1.5px solid var(--line);
+  transition: border-color .4s;
+  scroll-margin-top: 96px;
+}
+.prod:hover, .prod:target { border-color: var(--accent); }
+.prod__shot {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.prod__shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+.prod__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.prod__type { font: 700 11px/1.2 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px; border-radius: 999px;
+  border: 1.5px solid currentColor;
+  font: 700 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase;
+}
+.tag i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.prod h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(32px, 3vw, 44px); line-height: .95; text-wrap: balance; }
+.prod p { font-size: 15px; color: var(--muted); }
+.prod__list { display: grid; gap: 8px; font-size: 14px; }
+.prod__list li { display: flex; gap: 10px; align-items: baseline; }
+.prod__list li::before { content: "✦"; color: var(--accent); font-size: 10px; }
+.prod__price { margin-top: auto; padding-top: 16px; border-top: 1.5px solid var(--line); display: grid; gap: 6px; }
+.prod__price small { font: 700 11px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.prod__price span { font-weight: 500; }
+.prod__cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.prod__cta .pill { flex: 1 1 130px; padding: 0 18px; }
+
+/* Kartu mendatar: teks di kiri, gambar di kanan. Dipakai di layar lebar saat
+   satu kelompok hanya berisi satu produk, dan untuk semua kartu di tablet. */
+@media (min-width: 900px) {
+  .cat-grid > .prod:only-child {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    column-gap: clamp(28px, 4vw, 56px); row-gap: 16px; align-content: start;
+  }
+  .cat-grid > .prod:only-child > * { grid-column: 1; }
+  .cat-grid > .prod:only-child > .prod__shot { grid-column: 2; grid-row: 1 / span 6; aspect-ratio: auto; min-height: 300px; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .cat-grid { grid-template-columns: minmax(0, 1fr); }
+  .cat-grid > .prod {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 24px; row-gap: 14px; align-content: start;
+  }
+  .cat-grid > .prod > * { grid-column: 1; }
+  .cat-grid > .prod > .prod__shot { grid-column: 2; grid-row: 1 / span 6; aspect-ratio: auto; min-height: 240px; }
+}
+@media (max-width: 599px) {
+  .cat-grid { grid-template-columns: minmax(0, 1fr); }
+  .prod { padding: 18px; }
+}
+
+.cat-end { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; }
+.cat-end .section__head { margin-bottom: 0; }
+.cat-end__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+
 /* ---------- responsif ---------- */
 @media (max-width: 1000px) {
   .hero__grid, .feat, .origin { grid-template-columns: minmax(0, 1fr); }

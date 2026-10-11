@@ -276,9 +276,9 @@
   }
 
   /* ---------- Products ---------- */
-  gsap.from(".prod", {
+  gsap.from(".prod-mini", {
     y: 50, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.12,
-    scrollTrigger: { trigger: ".prod-grid", start: "top 80%" },
+    scrollTrigger: { trigger: ".prod-strip", start: "top 80%" },
   });
 
   /* ---------- Services ---------- */
