@@ -18,3 +18,9 @@ document.querySelectorAll("[data-cara]").forEach((el) => {
   const link = LINK_BELI[el.dataset.produk];
   el.hidden = (el.dataset.cara === "mayar") !== Boolean(link);
 });
+
+// Katalog (/produk/): jumlah produk per kelompok di tombol atas.
+document.querySelectorAll("[data-hitung]").forEach((el) => {
+  const kelompok = document.getElementById(el.dataset.hitung);
+  if (kelompok) el.textContent = kelompok.querySelectorAll(".prod").length;
+});
