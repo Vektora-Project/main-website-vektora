@@ -18,6 +18,7 @@ js/main.js animasi & interaksi
 assets/logo-mark.png logo terang (untuk latar gelap)
 assets/logo-mark-ink.png logo warna asli (untuk latar terang & favicon)
 demo/ demo produk yang bisa dicoba (HASIL BUILD dari repo demo-produk — jangan edit di sini)
+produk/ halaman produk digital yang bisa dibeli (template, dll.)
 wrangler.jsonc konfigurasi Cloudflare Worker
 .assetsignore file yang tidak ikut dipublikasikan
 
@@ -46,8 +47,12 @@ Penting:
 - **Karya:** `index.html` → bagian `<section class="works">`; satu `<article class="card">` = satu karya.
 - **Produk:** `index.html` → bagian `<section class="products">`; satu `<article class="prod">` = satu produk.
   - Produk yang dipesan lewat konsultasi: tombol "Coba demo" + "Konsultasi" (WhatsApp). Harga tidak dicantumkan.
-  - Produk digital yang dibeli langsung (template, dll.): isi harga di `.prod__price`, ubah label `Segera hadir` jadi `Tersedia`, dan arahkan tombol utama ke halaman pembayaran (Mayar, Lynk.id, Shopee, dll.).
+  - Produk digital yang dibeli langsung (template, dll.): isi harga di `.prod__price`, label `Tersedia`, dan tombol ke halaman produknya di `produk/<nama-produk>/`.
   - Produk yang belum siap diberi label `Segera hadir` dan tombol "Kabari saya".
+- **Halaman produk digital** (`/produk/`): satu folder per produk, gaya bersama di `produk/produk.css`.
+  - Link checkout Mayar diisi di `produk/produk.js` (`LINK_BELI`). Selama kosong, tombol "Beli sekarang" membuka WhatsApp dan pembayaran diatur lewat chat.
+  - File produknya sendiri (mis. `.xlsx`) **tidak** disimpan di repo ini karena repo ini terbit di website. Sumbernya ada di repo `Vektora-Project/demo-produk` folder `produk/`, dan filenya diunggah ke Mayar.
+  - `Template Kelola Kos`: gambar di `produk/template-kelola-kos/img/` adalah tangkapan layar file contoh (kos fiktif).
 - **Demo** (`/demo/`): dibuat dari repo `Vektora-Project/demo-produk`. Ubah di sana (`sumber/src/`), lalu jalankan
   `python3 sumber/build.py --web-utama ../main-website-vektora/demo` dan commit folder `demo/` di repo ini.
   Semua demo memakai perusahaan dan angka fiktif, dengan label "Demo · data contoh".
