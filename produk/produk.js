@@ -3,6 +3,9 @@
 // Setelah produk dibuat di Mayar, salin link produknya dari dashboard Mayar dan tempel di sini.
 const LINK_BELI = {
   "template-kelola-kos": "",
+  "template-kpi-karyawan": "",
+  "template-rab-bangunan": "",
+  "template-keuangan-pribadi": "",
 };
 
 document.querySelectorAll("[data-beli]").forEach((el) => {

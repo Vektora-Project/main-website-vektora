@@ -290,6 +290,8 @@ ul, ol { padding: 0; list-style: none; }
   }
   .cat-grid > .prod:only-child > * { grid-column: 1; }
   .cat-grid > .prod:only-child > .prod__shot { grid-column: 2; grid-row: 1 / span 6; aspect-ratio: auto; min-height: 300px; }
+  /* Tepat empat produk: dua kolom, supaya tidak ada kartu sendirian di baris kedua. */
+  .cat-grid:has(> .prod:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 600px) and (max-width: 899px) {
   .cat-grid { grid-template-columns: minmax(0, 1fr); }
