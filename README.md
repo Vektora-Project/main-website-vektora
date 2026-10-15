@@ -48,12 +48,13 @@ Penting:
 - **Produk:** katalog lengkap ada di `produk/index.html` (vektoraproject.com/produk/); satu `<article class="prod">` = satu produk.
   - Kelompok `#siap-dibeli`: produk digital yang dibayar langsung (template, dll.). Isi harga di `.prod__price` dan tombol ke halaman produknya di `produk/<nama-produk>/`.
   - Kelompok `#bisa-dipesan`: aplikasi yang dipesan lewat konsultasi. Tombol "Coba demo" + "Konsultasi" (WhatsApp). Harga tidak dicantumkan.
-  - Jumlah produk di tombol atas katalog dihitung otomatis. Kalau satu kelompok hanya berisi satu produk, kartunya otomatis melebar.
+  - Jumlah produk di tombol atas katalog dihitung otomatis. Kalau satu kelompok hanya berisi satu produk, kartunya otomatis melebar. Kalau tepat empat produk, kartunya dua kolom.
   - Halaman utama (`index.html`, `<section class="products">`) hanya menampilkan 3 produk pilihan + kartu "Semua produk", supaya tidak memanjang saat produk bertambah. Ganti produk pilihan di sana bila perlu, jangan menambah kartu.
 - **Halaman produk digital** (`/produk/`): satu folder per produk, gaya bersama di `produk/produk.css`.
   - Link checkout Mayar diisi di `produk/produk.js` (`LINK_BELI`). Selama kosong, tombol "Beli sekarang" membuka WhatsApp dan pembayaran diatur lewat chat.
   - File produknya sendiri (mis. `.xlsx`) **tidak** disimpan di repo ini karena repo ini terbit di website. Sumbernya ada di repo `Vektora-Project/demo-produk` folder `produk/`, dan filenya diunggah ke Mayar.
   - `Template Kelola Kos`: gambar di `produk/template-kelola-kos/img/` adalah tangkapan layar file contoh (kos fiktif).
+  - `Template KPI Karyawan`, `Template RAB Bangunan`, `Template Keuangan Pribadi`: gambar di folder `img/` masing-masing juga tangkapan layar file contoh (usaha, proyek, dan orang fiktif).
 - **Demo** (`/demo/`): dibuat dari repo `Vektora-Project/demo-produk`. Ubah di sana (`sumber/src/`), lalu jalankan
   `python3 sumber/build.py --web-utama ../main-website-vektora/demo` dan commit folder `demo/` di repo ini.
   Semua demo memakai perusahaan dan angka fiktif, dengan label "Demo · data contoh".
