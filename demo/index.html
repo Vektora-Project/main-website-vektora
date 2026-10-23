@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Demo Produk Vektora Project</title>
-<meta name="description" content="Coba langsung tiga contoh aplikasi bisnis buatan Vektora Project: sistem kas dan pelanggan untuk distributor, dashboard bisnis custom, dan sistem bimbel. Semua data contoh.">
+<meta name="description" content="Coba langsung contoh aplikasi bisnis buatan Vektora Project (sistem kas dan pelanggan, dashboard bisnis custom, sistem bimbel) dan website F&amp;B untuk kafe, restoran, dan toko kue. Semua data contoh.">
 <link rel="canonical" href="https://vektoraproject.com/demo/">
 <meta name="theme-color" content="#05090D">
 <link rel="icon" type="image/png" href="/demo/favicon.png">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:site_name" content="Vektora Project">
 <meta property="og:title" content="Demo Produk Vektora Project">
-<meta property="og:description" content="Coba langsung tiga contoh aplikasi bisnis buatan Vektora Project: sistem kas dan pelanggan untuk distributor, dashboard bisnis custom, dan sistem bimbel. Semua data contoh.">
+<meta property="og:description" content="Coba langsung contoh aplikasi bisnis buatan Vektora Project (sistem kas dan pelanggan, dashboard bisnis custom, sistem bimbel) dan website F&amp;B untuk kafe, restoran, dan toko kue. Semua data contoh.">
 <meta property="og:url" content="https://vektoraproject.com/demo/">
 <meta property="og:image" content="https://vektoraproject.com/demo/og/demo-produk.jpg">
 <meta property="og:image:width" content="1200">
@@ -54,6 +54,7 @@ h1{font-family:'Grotesk',ui-sans-serif,system-ui,sans-serif;font-weight:600;font
 .lead{font-size:clamp(16px,1.9vw,19px);color:var(--soft);max-width:58ch;margin:0}
 
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:-28px;position:relative;z-index:2}
+.cards.fnb{margin-top:0}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .card .thumb{aspect-ratio:16/10;background:#0e1820;border-bottom:1px solid var(--line);overflow:hidden}
 .card .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left}
@@ -138,7 +139,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
     <div class="wrap">
       <span class="eyebrow">Demo · data contoh</span>
       <h1>Coba dulu sistemnya, langsung di browser.</h1>
-      <p class="lead">Tiga contoh aplikasi bisnis buatan Vektora Project yang bisa Anda klik dan isi sendiri, dari laptop maupun HP. Tanpa daftar dan tanpa instal.</p>
+      <p class="lead">Contoh aplikasi bisnis dan website buatan Vektora Project yang bisa Anda klik dan isi sendiri, dari laptop maupun HP. Tanpa daftar dan tanpa instal.</p>
     </div>
   </section>
 
@@ -196,7 +197,60 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
       </article>
     </div>
 
-    <p class="honest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span>Perusahaan, lembaga, nama orang, dan angka di ketiga demo adalah data contoh. Isian yang Anda ubah hanya tersimpan sementara di browser Anda dan hilang saat halaman dimuat ulang.</span></p>
+    <p class="honest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg><span>Perusahaan, lembaga, usaha, nama orang, dan angka di semua demo adalah data contoh. Isian yang Anda ubah hanya tersimpan sementara di browser Anda dan hilang saat halaman dimuat ulang.</span></p>
+
+
+    <section class="block" aria-labelledby="fnb" id="website-fnb">
+      <h3 id="fnb">Website F&amp;B (bahasa Inggris)</h3>
+      <p class="sub">Contoh website untuk kafe, restoran, dan toko kue, dibuat untuk calon klien di Australia, Singapura, Malaysia, dan Amerika Serikat. Ketiga usahanya fiktif.</p>
+      <div class="cards fnb">
+      <article class="card">
+        <a class="thumb" href="fnb-cafe/" tabindex="-1" aria-hidden="true"><img src="img/fnb-cafe.jpg" width="1440" height="900" alt="" loading="lazy"></a>
+        <div class="body">
+          <div class="cat">Website Kafe</div>
+          <h2>Pebble &amp; Fern Coffee</h2>
+          <p>Website kafe dengan menu HTML (bukan PDF), status buka atau tutup otomatis sesuai jam, dan pemesanan untuk diambil sendiri.</p>
+          <ul class="try">
+            <li>Pilih susu untuk kopi lalu tambahkan ke pesanan</li>
+            <li>Pilih jam ambil dan kirim pesanan</li>
+            <li>Lihat jam buka hari ini ditandai otomatis</li>
+          </ul>
+          <div class="end"><a class="btn primary" href="fnb-cafe/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="fit">Pesanan bisa diteruskan ke tablet kasir, WhatsApp, atau pembayaran online.</div></div>
+        </div>
+      </article>
+      <article class="card">
+        <a class="thumb" href="fnb-restaurant/" tabindex="-1" aria-hidden="true"><img src="img/fnb-restaurant.jpg" width="1440" height="900" alt="" loading="lazy"></a>
+        <div class="body">
+          <div class="cat">Website Restoran</div>
+          <h2>Ember Hollow</h2>
+          <p>Website restoran dengan menu per kategori, reservasi meja yang menampilkan jam yang masih tersedia, dan formulir acara privat.</p>
+          <ul class="try">
+            <li>Pilih jumlah tamu, tanggal, dan jam yang masih kosong</li>
+            <li>Konfirmasi booking lalu simpan ke kalender</li>
+            <li>Kirim permintaan acara privat untuk 20 orang</li>
+          </ul>
+          <div class="end"><a class="btn primary" href="fnb-restaurant/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="fit">Reservasi bisa masuk ke Google Sheet dan email restoran.</div></div>
+        </div>
+      </article>
+      <article class="card">
+        <a class="thumb" href="fnb-bakery/" tabindex="-1" aria-hidden="true"><img src="img/fnb-bakery.jpg" width="1440" height="900" alt="" loading="lazy"></a>
+        <div class="body">
+          <div class="cat">Website Toko Kue</div>
+          <h2>Sable &amp; Sugar Bakery</h2>
+          <p>Website toko kue dengan katalog produk, pembuat kue custom yang pratinjau dan harganya berubah langsung, serta pesanan lewat WhatsApp atau email.</p>
+          <ul class="try">
+            <li>Saring produk gluten-free dan tambahkan ke pesanan</li>
+            <li>Rancang kue dua tingkat dengan tulisan, lihat harganya</li>
+            <li>Kirim pesanan lewat WhatsApp dengan pesan yang sudah tersusun</li>
+          </ul>
+          <div class="end"><a class="btn primary" href="fnb-bakery/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="fit">Tanggal ambil menolak hari libur toko secara otomatis.</div></div>
+        </div>
+      </article>
+      </div>
+    </section>
 
     <section class="block" aria-labelledby="cara">
       <h3 id="cara">Cara kami mengerjakan proyek</h3>
