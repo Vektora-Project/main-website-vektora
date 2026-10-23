@@ -6,7 +6,7 @@ const LINK_BELI = {
   "template-kpi-karyawan": "https://vektora-project.myr.id/pl/template-kpi-karyawan-excel-google-sheets",
   "template-rab-bangunan": "https://vektora-project.myr.id/pl/template-rab-bangunan-excel-google-sheets",
   "template-keuangan-pribadi": "https://vektora-project.myr.id/pl/template-keuangan-pribadi-excel-google-sheets",
-  "template-administrasi-proyek": "", // isi setelah produk dibuat di Mayar
+  "template-administrasi-proyek": "https://vektora-project.myr.id/pl/template-administrasi-proyek-excel-google-sheets",
 };
 
 document.querySelectorAll("[data-beli]").forEach((el) => {
