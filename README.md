@@ -54,7 +54,7 @@ Penting:
   - Link checkout Mayar diisi di `produk/produk.js` (`LINK_BELI`). Selama kosong, tombol "Beli sekarang" membuka WhatsApp dan pembayaran diatur lewat chat.
   - File produknya sendiri (mis. `.xlsx`) **tidak** disimpan di repo ini karena repo ini terbit di website. Sumbernya ada di repo `Vektora-Project/demo-produk` folder `produk/`, dan filenya diunggah ke Mayar.
   - `Template Kelola Kos`: gambar di `produk/template-kelola-kos/img/` adalah tangkapan layar file contoh (kos fiktif).
-  - `Template KPI Karyawan`, `Template RAB Bangunan`, `Template Keuangan Pribadi`: gambar di folder `img/` masing-masing juga tangkapan layar file contoh (usaha, proyek, dan orang fiktif).
+  - `Template KPI Karyawan`, `Template RAB Bangunan`, `Template Keuangan Pribadi`, `Template Administrasi Proyek`: gambar di folder `img/` masing-masing juga tangkapan layar file contoh (usaha, proyek, dan orang fiktif).
 - **Demo** (`/demo/`): dibuat dari repo `Vektora-Project/demo-produk`. Ubah di sana (`sumber/src/`), lalu jalankan
   `python3 sumber/build.py --web-utama ../main-website-vektora/demo` dan commit folder `demo/` di repo ini.
   Semua demo memakai perusahaan dan angka fiktif, dengan label "Demo · data contoh".
