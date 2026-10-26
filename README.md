@@ -20,6 +20,7 @@ assets/logo-mark-ink.png logo warna asli (untuk latar terang & favicon)
 demo/ demo produk yang bisa dicoba (HASIL BUILD dari repo demo-produk — jangan edit di sini)
 produk/ katalog produk (index.html) dan halaman produk digital yang bisa dibeli
 wrangler.jsonc konfigurasi Cloudflare Worker
+robots.txt, sitemap.xml, llms.txt  SEO & GEO (lihat bagian "Mengubah isi")
 .assetsignore file yang tidak ikut dipublikasikan
 
 ## Warna brand
@@ -59,6 +60,10 @@ Penting:
   `python3 sumber/build.py --web-utama ../main-website-vektora/demo` dan commit folder `demo/` di repo ini.
   Semua demo memakai perusahaan dan angka fiktif, dengan label "Demo · data contoh".
 - **Label jujur** (`Dipakai operasional`, `Demo produk`, `Dalam pengembangan`) dipertahankan. Studi kasus klien hanya ditambahkan setelah ada izin tertulis dari klien.
+- **SEO & GEO** (supaya mudah ditemukan Google, Bing, dan asisten AI):
+  - `index.html` `<head>`: title, description, canonical, Open Graph (`assets/og.jpg`), dan JSON-LD `@graph` (ProfessionalService + WebSite + FAQPage).
+  - Bagian FAQ dan "Fakta singkat" di halaman utama (`<section class="faq">`). Isi FAQ **harus sama** dengan FAQPage di JSON-LD dan dengan `llms.txt`.
+  - `robots.txt` (semua bot, termasuk bot AI, diizinkan), `sitemap.xml` (tambahkan URL saat ada produk/demo baru, perbarui `lastmod`), dan `llms.txt` (ringkasan situs untuk AI).
 - **Kontak** (email, WhatsApp, Instagram): di hero dan footer `index.html`, serta nomor WhatsApp untuk form di `js/main.js`.
 
 ---

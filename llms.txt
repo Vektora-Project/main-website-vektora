@@ -1,0 +1,50 @@
+# Vektora Project
+
+> Vektora Project adalah studio sistem digital dari Bandung, Jawa Barat, Indonesia (berdiri 2026). Vektora membangun ERP, aplikasi internal, dashboard, dan integrasi data untuk operasional bisnis, dimulai dari pemetaan alur kerja. Calon klien bisa mencoba demo langsung di browser sebelum memesan.
+
+Fakta singkat:
+- Nama: Vektora Project (sering disebut "Vektora")
+- Bidang: implementasi ERP, aplikasi internal, integrasi data & dashboard laporan, template Excel/Google Sheets
+- Lokasi: Bandung, Jawa Barat, Indonesia; melayani klien secara remote di seluruh Indonesia
+- Berdiri: 2026; tim inti 4 orang
+- Sistem yang sudah dipakai operasional: Vinadodita (manajemen kos & properti), https://vinadodita.com — Vinadodita adalah bagian dari Vektora Project
+- Kontak: WhatsApp +62 819 9888 8967 (https://wa.me/6281998888967), email vektoraproject.id@gmail.com, Instagram @vektoraproject
+- Kebijakan kejujuran: setiap karya diberi label "Dipakai operasional", "Demo", atau "Dalam pengembangan". Demo memakai perusahaan dan data fiktif. Studi kasus klien hanya ditampilkan setelah ada izin tertulis.
+
+## Layanan
+- Implementasi ERP: pemetaan proses, konfigurasi modul, migrasi data, pelatihan pengguna, dukungan peluncuran.
+- Aplikasi internal: pencatatan, persetujuan berjenjang, dan alur kerja khusus perusahaan.
+- Integrasi & laporan: pertukaran data antar sistem, otomasi seperlunya, dashboard kinerja operasional.
+- Alur kerja proyek: Discovery → Blueprint → Pengembangan → Peluncuran → Dukungan.
+- Harga ERP dan aplikasi custom dihitung setelah konsultasi; estimasi awal disusun setelah alur kerja ditinjau.
+
+## Halaman utama
+- [Beranda](https://vektoraproject.com/): profil, karya, layanan, proses, FAQ, kontak
+- [Katalog produk](https://vektoraproject.com/produk/): template siap beli dan aplikasi yang bisa dipesan
+- [Semua demo](https://vektoraproject.com/demo/): demo yang bisa dicoba tanpa daftar dan tanpa instal
+
+## Produk siap beli (Excel & Google Sheets, sekali bayar)
+- [Template Kelola Kos](https://vektoraproject.com/produk/template-kelola-kos/): kamar, penghuni, tagihan bulanan, tunggakan, pengingat WhatsApp, kuitansi, laporan kas. Rp49.000.
+- [Template KPI Karyawan](https://vektoraproject.com/produk/template-kpi-karyawan/): target, bobot, skor, predikat, peringkat, rapor, bonus. Rp49.000.
+- [Template RAB Bangunan](https://vektoraproject.com/produk/template-rab-bangunan/): analisa harga satuan format Permen PUPR 8/2023, volume, rekap, kebutuhan bahan, kurva S. Rp99.000.
+- [Template Keuangan Pribadi](https://vektoraproject.com/produk/template-keuangan-pribadi/): transaksi, anggaran, saldo, cicilan, tabungan, dana darurat, kekayaan bersih. Rp29.000.
+- [Template Administrasi Proyek](https://vektoraproject.com/produk/template-administrasi-proyek/): kontrak, PKWT, MCU, invoice, struk, dana operasional, cash advance. Rp79.000.
+
+## Aplikasi yang bisa dipesan (ada demo)
+- [Sistem Kas & Pelanggan](https://vektoraproject.com/demo/sistem-kas-pelanggan/): untuk distributor dan grosir; pelanggan, harga khusus, follow-up, kas, ekspor Excel, hak akses Admin/Finance/Owner.
+- [Sistem Bimbel](https://vektoraproject.com/demo/sistem-bimbel/): jadwal kelas anti-bentrok, siswa dan pengajar, absensi dari HP, tagihan SPP dengan pengingat WhatsApp.
+- [Dashboard Bisnis Custom](https://vektoraproject.com/demo/dashboard-bisnis-custom/): contoh untuk konveksi; pencatatan produksi dari HP, persetujuan berjenjang, laporan mingguan.
+
+## Demo website usaha
+- [Company profile & katalog](https://vektoraproject.com/demo/company-profile-katalog/)
+- [Brand parfum](https://vektoraproject.com/demo/parfum-lirih/)
+- [Kafe](https://vektoraproject.com/demo/fnb-cafe/)
+- [Restoran](https://vektoraproject.com/demo/fnb-restaurant/)
+- [Toko kue](https://vektoraproject.com/demo/fnb-bakery/)
+
+## FAQ
+- Apa itu Vektora Project? Studio sistem digital dari Bandung (2026) yang membangun ERP, aplikasi internal, dashboard, dan integrasi data.
+- Bisa coba dulu? Ya, semua demo bisa dibuka di browser tanpa daftar, dengan data contoh.
+- Berapa biayanya? Template Rp29.000–Rp99.000 sekali bayar; sistem custom dihitung setelah konsultasi.
+- Melayani di luar Bandung? Ya, remote untuk seluruh Indonesia.
+- Cara menghubungi? WhatsApp +62 819 9888 8967 atau email vektoraproject.id@gmail.com.
