@@ -48,7 +48,7 @@ h1, h2, h3, h4, p { margin: 0; }
   text-transform: uppercase;
   opacity: .85;
 }
-.works .eyebrow, .products .eyebrow, .services .eyebrow, .process .eyebrow { color: var(--accent); opacity: 1; }
+.works .eyebrow, .products .eyebrow, .services .eyebrow, .process .eyebrow, .faq .eyebrow { color: var(--accent); opacity: 1; }
 .title {
   font-family: var(--display);
   font-weight: 400;
@@ -497,6 +497,33 @@ a.mock { display: block; }
 .footer__meta { grid-template-columns: repeat(3, 1fr) 1.4fr auto; }
 .footer__bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 28px; font: 700 12px/1.4 var(--body); letter-spacing: .1em; text-transform: uppercase; }
 
+/* ---------- FAQ & FAKTA SINGKAT ---------- */
+.faq { padding: 40px var(--gutter) 140px; }
+.faq__head { display: grid; gap: 18px; margin-bottom: 56px; }
+.faq__grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.faq__list { border-top: 1.5px solid var(--paper); }
+.faq__item { border-bottom: 1.5px solid var(--line); }
+.faq__item summary {
+  display: grid; grid-template-columns: 44px 1fr 32px; align-items: center; gap: 14px;
+  padding: 22px 0; cursor: pointer; list-style: none;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.faq__n { font: 700 13px/1 var(--body); letter-spacing: .1em; color: var(--accent); }
+.faq__item h3 { font: 500 clamp(18px, 1.7vw, 24px)/1.25 var(--body); letter-spacing: -.01em; }
+.faq__icon { font-size: 28px; line-height: 1; justify-self: end; transition: transform .5s var(--ease); }
+.faq__item[open] .faq__icon { transform: rotate(45deg); }
+.faq__item p { padding: 0 32px 24px 58px; font-size: 15px; line-height: 1.6; opacity: .85; max-width: 46em; }
+.faq__link { display: inline-block; margin-top: 8px; color: var(--accent); font-weight: 700; }
+.faq__link:hover { text-decoration: underline; }
+.facts { position: sticky; top: 96px; background: var(--paper); color: var(--ink); border-radius: var(--radius); padding: 28px; }
+.facts h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(28px, 2.4vw, 40px); line-height: 1; margin-bottom: 18px; }
+.facts dl { margin: 0; }
+.facts dl > div { display: grid; gap: 4px; padding: 12px 0; border-top: 1px solid rgba(5, 9, 13, .14); }
+.facts dt { font: 700 11px/1.3 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+.facts dd { margin: 0; font-size: 15px; line-height: 1.45; }
+.facts a { text-decoration: underline; text-underline-offset: 2px; }
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 1100px) {
   .prod-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -520,6 +547,8 @@ a.mock { display: block; }
   .svc__item p { grid-column: 2 / 3; }
   .svc__arrow { grid-row: 1; grid-column: 3; font-size: 26px; }
   .stats { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+  .faq__grid { grid-template-columns: minmax(0, 1fr); }
+  .facts { position: static; }
 }
 @media (max-width: 680px) {
   .prod-strip { grid-template-columns: minmax(0, 1fr); }
@@ -538,6 +567,9 @@ a.mock { display: block; }
   .works__demo-t { grid-column: 1 / -1; grid-row: 2; }
   .footer__bottom { flex-direction: column; }
   .marquee { margin: 48px 0 20px; }
+  .faq__item summary { grid-template-columns: 32px 1fr 24px; gap: 10px; }
+  .faq__item p { padding: 0 0 22px 42px; }
+  .facts { padding: 22px 18px; }
 }
 
 /* ---------- LITE MOTION (touch / small screens) ---------- */
