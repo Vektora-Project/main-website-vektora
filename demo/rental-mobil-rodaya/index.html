@@ -450,7 +450,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil: <a href="https://github.com/drcollect/collect-cars">Collect Cars</a> oleh drcollect, lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Warna cat diubah untuk demo ini.</span></div></footer>
+<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil: <a href="https://github.com/drcollect/collect-cars">Collect Cars</a> oleh drcollect, dan Vanta = <a href="https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept">Car Concept</a> (Khronos Group, dari model domain publik Unity Fan), keduanya lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Warna cat, plat nomor, dan logo diubah untuk demo ini.</span></div></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="sheet" id="sheet"></div>
@@ -472,8 +472,8 @@ const MODEL_DIR='../models/', DRACO_DIR='../vendor/draco/';
 /* ---------------- data armada (fiktif) ----------------
    sopir = dengan driver per 6 jam, lepas = lepas kunci per 24 jam. Mobil 3D: desain konsep Collect Cars (CC BY 4.0). */
 const CARS=[
- {id:'vanta',model:'hypercar',nick:'Vanta',type:'Hypercar listrik · 2 kursi',desc:'Kanopi kaca gelap, sayap belakang melayang, dan roda dengan cincin cahaya. Bintang utama garasi kami.',cat:['harian','foto','track'],kw:1100,acc:'2,1',top:350,drive:'AWD listrik',year:2026,sopir:18e6,lepas:45e6,
-  colors:[['Oranye senja','#D9561F'],['Grafit satin','#2E3136'],['Putih kutub','#E6E8EA']],booked:[2,3,9]},
+ {id:'vanta',model:'carconcept',nick:'Vanta',type:'Grand tourer listrik · 2+2 kursi',desc:'Cat metalik berbintik, atap kaca panoramik, dan kabin kulit merah. Bintang utama garasi kami.',cat:['harian','foto','track'],kw:1100,acc:'2,1',top:350,drive:'AWD listrik',year:2026,sopir:18e6,lepas:45e6,
+  colors:[['Merah delima','#8E0F1C'],['Grafit satin','#2E3136'],['Putih mutiara','#E6E8EA']],booked:[2,3,9]},
  {id:'sudut',model:'wedge',nick:'Sudut',type:'Supercar wedge gaya 80-an · 2 kursi',desc:'Bentuk baji tajam dengan lampu pop-up dan kisi-kisi belakang. Favorit untuk foto prewedding bertema retro.',cat:['harian','foto','acara'],kw:485,acc:'3,4',top:315,drive:'V12, RWD',year:2025,sopir:9.5e6,lepas:24e6,
   colors:[['Merah','#B21C24'],['Kuning','#E2A80C'],['Putih','#ECEBE6']],booked:[0,6,7]},
  {id:'badai',model:'rally',nick:'Badai',type:'Supercar rally-raid 4x4 · 2 kursi',desc:'Kolong tinggi, suspensi panjang, dan lampu sorot di atap. Supercar yang tidak takut jalan berpasir.',cat:['harian','foto'],kw:420,acc:'3,9',top:250,drive:'Twin-turbo, 4x4',year:2025,sopir:8.5e6,lepas:22e6,
@@ -623,7 +623,8 @@ function init3D(){
  // (three.js r128 belum membaca KHR_materials_emissive_strength/specular dari file, jadi diatur di sini.)
  const tuned=new Set();
  function tune(mt){if(tuned.has(mt))return;tuned.add(mt);const n=mt.name||'';
-  if(/paint|graphite/i.test(n)){mt.metalness=.22;mt.roughness=.4;if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=.03}mt.envMapIntensity=.8}
+  if(/paint|graphite/i.test(n)){if(mt.normalMap||mt.aoMap){mt.normalMap=null;mt.aoMap=null;mt.metalness=.5;mt.roughness=.3}else{mt.metalness=.22;mt.roughness=.4}if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=.03}mt.envMapIntensity=.8} // peta bintik cat (Car Concept) butuh texture_transform per peta, belum didukung r128
+  else if(n==='Glass'){mt.transmission=0;mt.color.set(0x0b0d12);mt.transparent=true;mt.opacity=.42;mt.metalness=0;mt.roughness=.02;mt.depthWrite=false;if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=0}mt.envMapIntensity=1.2} // kaca Car Concept: gelap tembus, kabin terlihat
   else if(/glass/i.test(n)){mt.color.multiplyScalar(.5);mt.metalness=0;mt.roughness=.04;if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=0}mt.envMapIntensity=.85}
   else if(/tyre|rubber/i.test(n)){mt.roughness=.88;mt.metalness=0;if('clearcoat' in mt)mt.clearcoat=0;mt.envMapIntensity=.4}
   else if(/light|ring/i.test(n)){mt.emissiveIntensity=/red/i.test(n)?3:4;mt.toneMapped=true}
