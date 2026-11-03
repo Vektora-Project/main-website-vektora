@@ -18,6 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="produk.css" />
+  <link rel="stylesheet" href="../css/nav-halaman.css" />
 </head>
 <body>
   <header class="top">
@@ -26,7 +27,15 @@
         <img src="../assets/logo-mark.png" alt="" width="34" height="28" />
         <span>Vektora<br />Project</span>
       </a>
-      <a class="top__back" href="../">← <span>Halaman utama</span></a>
+      <nav class="top__nav" aria-label="Navigasi utama">
+        <a href="../karya/">Karya</a>
+        <a href="../demo/">Demo</a>
+        <a href="../produk/" aria-current="page">Produk</a>
+        <a href="../layanan/">Layanan</a>
+        <a href="../proses/">Proses</a>
+        <a href="../#kontak">Kontak</a>
+      </nav>
+      <a class="top__cta" href="../#kontak">Mulai Proyek</a>
     </div>
   </header>
 
@@ -179,7 +188,7 @@
         </div>
         <div class="cat-end__cta">
           <a class="pill pill--light" href="https://wa.me/6281998888967?text=Halo%20Vektora%2C%20saya%20ingin%20konsultasi%20kebutuhan%20usaha%20saya." target="_blank" rel="noopener"><span>Konsultasi lewat WhatsApp</span></a>
-          <a class="pill pill--line" href="../#karya"><span>Lihat karya</span></a>
+          <a class="pill pill--line" href="../karya/"><span>Lihat karya</span></a>
         </div>
       </div>
     </section>
