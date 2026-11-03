@@ -25,3 +25,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+carconcept.glb: "Car Concept" from KhronosGroup/glTF-Sample-Assets
+(https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept),
+based on a public domain (CC0) model by Unity Fan on Sketchfab.
+License: CC BY 4.0. Khronos logos/trademarks are not licensed and were removed
+(license plate and tyre sidewall textures replaced), Draco-compressed and
+textures resized to 1024 px for this demo.
