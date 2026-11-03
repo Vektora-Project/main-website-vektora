@@ -459,6 +459,7 @@ footer a{color:#fff}
 <script src="../vendor/three.min.js"></script>
 <script src="../vendor/GLTFLoader.js"></script>
 <script src="../vendor/DRACOLoader.js"></script>
+<script src="../vendor/Reflector.js"></script>
 <script>
 (()=>{
 'use strict';
@@ -521,6 +522,11 @@ function init3D(){
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));
  renderer.outputEncoding=THREE.sRGBEncoding;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+ // Kualitas: HP pakai bayangan dan pantulan lantai beresolusi lebih kecil supaya tetap lancar.
+ const LOW=matchMedia('(pointer:coarse)').matches||innerWidth<760;
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ renderer.shadowMap.autoUpdate=false;renderer.shadowMap.needsUpdate=true; // bayangan dihitung ulang hanya saat mobil bergerak
+ renderer.physicallyCorrectLights=false;
  stageEl.prepend(renderer.domElement);
  renderer.domElement.setAttribute('aria-label','Garasi 3D, klik mobil untuk melihat detail');
  renderer.domElement.tabIndex=0;
@@ -541,14 +547,32 @@ function init3D(){
  const side1=new THREE.Mesh(roomG,lightMat(2.2));side1.scale.set(.1,3,24);side1.position.set(-19,5,0);env.add(side1);
  const side2=side1.clone();side2.position.x=19;env.add(side2);
  const back=new THREE.Mesh(roomG,lightMat(1.4));back.scale.set(30,2,.1);back.position.set(0,3,19);env.add(back);
- const envTex=pm.fromScene(env,.04).texture;
+ // Pantulan plafon heksagon yang sama dengan yang terlihat, supaya kilap cat "cocok" dengan ruangan.
+ {const hg=new THREE.RingGeometry(1.5,1.75,6,1);hg.rotateX(Math.PI/2);const hm=lightMat(3);hm.side=THREE.DoubleSide;
+  for(let r=-4;r<=4;r++)for(let q=-6;q<=6;q++){const h=new THREE.Mesh(hg,hm);h.position.set(q*3.1+(r%2?1.55:0),12.9,r*2.7);env.add(h)}}
+ // Softbox besar di atas mobil: garis kilap panjang khas foto studio mobil.
+ const soft=new THREE.Mesh(roomG,lightMat(1.8));soft.scale.set(12,.05,3.5);soft.position.set(0,12.6,2);env.add(soft);
+ const floorEnv=new THREE.Mesh(roomG,lightMat(.035));floorEnv.scale.set(40,.05,40);floorEnv.position.y=-.9;env.add(floorEnv);
+ const envTex=pm.fromScene(env,.02).texture;
  scene.environment=envTex;
 
  scene.add(new THREE.HemisphereLight(0xdfe6ff,0x101010,.22));
- const key=new THREE.DirectionalLight(0xffffff,1.4);key.position.set(4,10,6);scene.add(key);
+ const key=new THREE.DirectionalLight(0xffffff,1.0);key.position.set(4,10,6);scene.add(key);
+ // Lampu bayangan dari plafon: bayangan lembut asli di bawah tiap mobil (bukan hanya bercak bulat).
+ const sun=new THREE.DirectionalLight(0xffffff,.55);sun.position.set(1.5,12,3.5);sun.target.position.set(0,0,0);scene.add(sun,sun.target);
+ sun.castShadow=true;sun.shadow.mapSize.set(LOW?1024:2048,LOW?1024:2048);sun.shadow.bias=-.0004;sun.shadow.normalBias=.02;sun.shadow.radius=LOW?3:5;
+ Object.assign(sun.shadow.camera,{left:-N*GAP/2-2,right:N*GAP/2+2,top:5,bottom:-5,near:2,far:22});sun.shadow.camera.updateProjectionMatrix();
 
  // Lantai, garis petak, nomor petak
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:0x08090b,roughness:.36,metalness:.3,envMapIntensity:.5}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+ // Lantai epoxy mengilap: pantulan asli mobil dan lampu (Reflector) di bawah lapisan lantai yang agak tembus.
+ if(THREE.Reflector){const rs=LOW?.35:.5, rw=Math.round(innerWidth*Math.min(devicePixelRatio||1,1.75)*rs), rh=Math.round(innerHeight*Math.min(devicePixelRatio||1,1.75)*rs);
+  const mirror=new THREE.Reflector(new THREE.PlaneGeometry(120,60),{textureWidth:rw,textureHeight:rh,color:0x26282c,clipBias:.003});
+  mirror.rotation.x=-Math.PI/2;mirror.position.y=-.002;scene.add(mirror)}
+ const floorTex=(()=>{const c=document.createElement('canvas');c.width=c.height=512;const g=c.getContext('2d');g.fillStyle='#808080';g.fillRect(0,0,512,512);
+  for(let i=0;i<9000;i++){const v=110+Math.random()*40|0;g.fillStyle=`rgba(${v},${v},${v},.35)`;g.fillRect(Math.random()*512,Math.random()*512,1.5,1.5)}
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(24,12);return t})();
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:0x060709,roughness:.5,roughnessMap:floorTex,metalness:0,envMapIntensity:.12,transparent:true,opacity:THREE.Reflector?.9:1}));
+ floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
  const lineMat=new THREE.MeshBasicMaterial({color:0xd9dce0});
  const lineG=new THREE.PlaneGeometry(1,1);
  const addLine=(x,z,w,d)=>{const m=new THREE.Mesh(lineG,lineMat);m.rotation.x=-Math.PI/2;m.scale.set(w,d,1);m.position.set(x,.004,z);scene.add(m)};
@@ -560,7 +584,7 @@ function init3D(){
  const canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g);const tx=new THREE.CanvasTexture(c);tx.encoding=THREE.sRGBEncoding;tx.anisotropy=4;redraw.push(()=>{g.clearRect(0,0,w,h);draw(g);tx.needsUpdate=true});return tx};
  const numTex=t=>canvasTex(256,128,g=>{g.fillStyle='#d9dce0';g.font='800 96px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,68)});
  document.fonts&&document.fonts.load('800 96px Archivo').then(()=>redraw.forEach(f=>f()));
- const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshBasicMaterial({color:0x17191d}));wall.position.set(0,7,-5.2);scene.add(wall);
+ const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshStandardMaterial({color:0x2a2d33,roughness:.9,metalness:0,roughnessMap:floorTex,envMapIntensity:.6}));wall.receiveShadow=true;wall.position.set(0,7,-5.2);scene.add(wall);
  {const tx=canvasTex(2048,400,g=>{g.fillStyle='#e8e8e4';g.font='800 300px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('rodaya',1024,190);g.fillStyle='#FFB21E';g.fillRect(560,350,928,18)});
   const sign=new THREE.Mesh(new THREE.PlaneGeometry(12.2,2.4),new THREE.MeshBasicMaterial({map:tx,transparent:true,opacity:.92}));sign.position.set(0,2.75,-5.15);scene.add(sign);}
  // Plafon heksagon bercahaya
@@ -570,7 +594,12 @@ function init3D(){
  const hexes=new THREE.InstancedMesh(hexG,hexMat,26*7);let k=0;const mtx=new THREE.Matrix4();
  for(let r=0;r<7;r++)for(let q=0;q<26;q++){mtx.makeTranslation((q-12.5)*hw+(r%2?hw/2:0),5.2,-4.4+r*1.42);hexes.setMatrixAt(k++,mtx)}
  hexes.count=k;scene.add(hexes);
- const blobTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,6,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.85)');gr.addColorStop(.6,'rgba(0,0,0,.45)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)})();
+ // Cahaya lembut di dalam tiap heksagon (pengganti bloom, murah untuk HP).
+ const glowG=new THREE.CircleGeometry(1.05,6);glowG.rotateX(Math.PI/2);glowG.rotateY(Math.PI/6);
+ const glowTx=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,30,64,64,64);gr.addColorStop(0,'rgba(255,255,255,.0)');gr.addColorStop(.75,'rgba(255,255,255,.22)');gr.addColorStop(.86,'rgba(255,255,255,.5)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)})();
+ const glow=new THREE.InstancedMesh(glowG,new THREE.MeshBasicMaterial({map:glowTx,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide,opacity:.55}),k);
+ for(let i=0;i<k;i++){hexes.getMatrixAt(i,mtx);mtx.elements[13]-=.01;glow.setMatrixAt(i,mtx)}scene.add(glow);
+ const blobTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,6,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.7)');gr.addColorStop(.55,'rgba(0,0,0,.32)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)})();
 
  // ---------- muat model mobil (glTF + Draco) ----------
  const ROW_YAW=.62; // model menghadap +Z; diputar sedikit supaya terlihat 3/4 dari kamera
@@ -581,7 +610,7 @@ function init3D(){
  const ready=CARS.map(c=>new Promise(res=>{
   loader.load(MODEL_DIR+c.model+'.glb',gltf=>{
    const m=gltf.scene;c.paints=[];
-   m.traverse(o=>{if(!o.isMesh)return;const mt=o.material;if(mt&&/paint|graphite/i.test(mt.name))c.paints.push(mt)});
+   m.traverse(o=>{if(!o.isMesh)return;o.castShadow=true;o.receiveShadow=true;const mt=o.material;if(!mt)return;tune(mt);if(/paint|graphite/i.test(mt.name))c.paints.push(mt)});
    c.paints=[...new Set(c.paints)];
    const box=new THREE.Box3().setFromObject(m);c.h=box.max.y;c.len=box.max.z-box.min.z;c.wid=box.max.x-box.min.x;
    const sh=new THREE.Mesh(new THREE.PlaneGeometry(c.wid*1.6,c.len*1.25),new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=.006;m.add(sh);
@@ -590,6 +619,17 @@ function init3D(){
    loadEl.textContent='Memuat mobil '+(++loaded)+'/'+N;if(loaded===N)loadEl.classList.add('done');res(c);
   },undefined,e=>{console.warn('Gagal memuat',c.model,e);if(++loaded===N)loadEl.classList.add('done');res(c)});
  }));
+ // Material lebih fisik: cat metalik + lapisan bening, kaca gelap mengilap, ban doff, lampu benar-benar menyala.
+ // (three.js r128 belum membaca KHR_materials_emissive_strength/specular dari file, jadi diatur di sini.)
+ const tuned=new Set();
+ function tune(mt){if(tuned.has(mt))return;tuned.add(mt);const n=mt.name||'';
+  if(/paint|graphite/i.test(n)){mt.metalness=.22;mt.roughness=.4;if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=.03}mt.envMapIntensity=.8}
+  else if(/glass/i.test(n)){mt.color.multiplyScalar(.5);mt.metalness=0;mt.roughness=.04;if('clearcoat' in mt){mt.clearcoat=1;mt.clearcoatRoughness=0}mt.envMapIntensity=.85}
+  else if(/tyre|rubber/i.test(n)){mt.roughness=.88;mt.metalness=0;if('clearcoat' in mt)mt.clearcoat=0;mt.envMapIntensity=.4}
+  else if(/light|ring/i.test(n)){mt.emissiveIntensity=/red/i.test(n)?3:4;mt.toneMapped=true}
+  else if(/brushed|metal/i.test(n)){mt.metalness=1;mt.roughness=.28;mt.envMapIntensity=1.2}
+  else if(/carbon|trim/i.test(n)){if('clearcoat' in mt){mt.clearcoat=.6;mt.clearcoatRoughness=.08}}
+  mt.needsUpdate=true}
  function paint(c){dirty=true;(c.paints||[]).forEach(m=>{m.color.set(c.colors[c.color][1]).convertSRGBToLinear()})}
 
  // cincin putar untuk mode pesan
@@ -648,13 +688,16 @@ function init3D(){
   let moving=dirty||cam.pos.distanceToSquared(want.pos)>1e-6||cam.tgt.distanceToSquared(want.tgt)>1e-6||Math.abs(ring.material.opacity-(S.mode==='cfg'?.55:0))>.003;
   CARS.forEach((c,i)=>{const y=S.mode==='cfg'&&i===S.idx?0:ROW_YAW;if(Math.abs(c.obj.rotation.y-y)>1e-4||c.obj.userData.grow)moving=true});
   if(!moving)return;dirty=false;
+  let carsMoved=false;
   cam.pos.lerp(want.pos,k);cam.tgt.lerp(want.tgt,k);
   camera.position.copy(cam.pos);camera.lookAt(cam.tgt);
   CARS.forEach((c,i)=>{const o=c.obj;const sel=i===S.idx;
    const y=S.mode==='cfg'&&sel?0:ROW_YAW;o.rotation.y+=(y-o.rotation.y)*k;
-   o.visible=S.mode!=='cfg'||sel;
+   const vis=S.mode!=='cfg'||sel;if(o.visible!==vis){o.visible=vis;carsMoved=true}
+   if(Math.abs(y-o.rotation.y)>1e-4||o.userData.grow)carsMoved=true;
    if(o.userData.grow){const s=o.scale.x+(1-o.scale.x)*(reduce?1:Math.min(1,k*1.4));o.scale.setScalar(s);if(s>.999){o.scale.setScalar(1);o.userData.grow=false}}});
   ring.position.x=x0+S.idx*GAP;ring.material.opacity+=((S.mode==='cfg'?.55:0)-ring.material.opacity)*k;
+  if(carsMoved)renderer.shadowMap.needsUpdate=true;
   renderer.render(scene,camera);
   if(S.mode==='cfg'){hsPos.set(0,car().h+.08,0);car().obj.localToWorld(hsPos);hsPos.project(camera);
    const r=cv.getBoundingClientRect(), sr=hero.getBoundingClientRect();
