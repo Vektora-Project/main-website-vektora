@@ -20,6 +20,9 @@ Fakta singkat:
 
 ## Halaman utama
 - [Beranda](https://vektoraproject.com/): profil, karya, layanan, proses, FAQ, kontak
+- [Karya](https://vektoraproject.com/karya/): klien, sistem yang dipakai operasional, aplikasi web, dan website usaha, dengan label jujur
+- [Layanan](https://vektoraproject.com/layanan/): rincian implementasi ERP, aplikasi internal, serta integrasi dan laporan
+- [Proses](https://vektoraproject.com/proses/): lima tahap kerja, apa yang dibutuhkan dari klien, dan hasil tiap tahap
 - [Katalog produk](https://vektoraproject.com/produk/): template siap beli dan aplikasi yang bisa dipesan
 - [Semua demo](https://vektoraproject.com/demo/): demo yang bisa dicoba tanpa daftar dan tanpa instal
 

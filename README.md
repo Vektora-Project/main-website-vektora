@@ -19,6 +19,8 @@ assets/logo-mark.png logo terang (untuk latar gelap)
 assets/logo-mark-ink.png logo warna asli (untuk latar terang & favicon)
 demo/ demo produk yang bisa dicoba (HASIL BUILD dari repo demo-produk — jangan edit di sini)
 produk/ katalog produk (index.html) dan halaman produk digital yang bisa dibeli
+karya/, layanan/, proses/  halaman sendiri untuk menu header (gaya: css/halaman.css, menu atas: css/nav-halaman.css)
+assets/partner/ logo klien (versi putih untuk latar gelap)
 wrangler.jsonc konfigurasi Cloudflare Worker
 robots.txt, sitemap.xml, llms.txt  SEO & GEO (lihat bagian "Mengubah isi")
 .assetsignore file yang tidak ikut dipublikasikan
@@ -45,7 +47,10 @@ Penting:
 - File yang tidak boleh terlihat publik didaftarkan di `.assetsignore`.
 
 ## Mengubah isi
-- **Karya:** `index.html` → bagian `<section class="works">`; satu `<article class="card">` = satu karya.
+- **Menu header:** Karya, Demo, Produk, Layanan, Proses membuka halamannya sendiri. Kontak tetap menggulir ke bagian kontak di halaman yang sedang dibuka (beranda: formulir di footer; halaman lain: blok kontak di bawah). Menu atas halaman selain beranda sama di `karya/`, `layanan/`, `proses/`, `produk/index.html`; ubah keempatnya bersamaan.
+- **Karya:** daftar lengkap di `karya/index.html` (klien, dipakai operasional, aplikasi web, website usaha). Beranda (`<section class="works">`) tetap carousel ringkas; satu `<article class="card">` = satu karya.
+- **Klien:** `<section class="clients">` di beranda dan `#klien` di `karya/`. Hanya klien yang sudah tanda tangan perjanjian dan mengizinkan namanya dipakai. Penyedia layanan yang kami pakai (server, internet) bukan partner, jangan ditaruh di sini.
+- **Layanan & Proses:** rincian di `layanan/index.html` dan `proses/index.html`; ringkasannya tetap di beranda.
 - **Produk:** katalog lengkap ada di `produk/index.html` (vektoraproject.com/produk/); satu `<article class="prod">` = satu produk.
   - Kelompok `#siap-dibeli`: produk digital yang dibayar langsung (template, dll.). Isi harga di `.prod__price` dan tombol ke halaman produknya di `produk/<nama-produk>/`.
   - Kelompok `#bisa-dipesan`: aplikasi yang dipesan lewat konsultasi. Tombol "Coba demo" + "Konsultasi" (WhatsApp). Harga tidak dicantumkan.
