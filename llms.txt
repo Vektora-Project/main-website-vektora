@@ -41,6 +41,7 @@ Fakta singkat:
 - [Kafe](https://vektoraproject.com/demo/fnb-cafe/)
 - [Restoran](https://vektoraproject.com/demo/fnb-restaurant/)
 - [Toko kue](https://vektoraproject.com/demo/fnb-bakery/)
+- [Kafe gaya 3D](https://vektoraproject.com/demo/fnb-wobble/)
 
 ## FAQ
 - Apa itu Vektora Project? Studio sistem digital dari Bandung (2026) yang membangun ERP, aplikasi internal, dashboard, dan integrasi data.
