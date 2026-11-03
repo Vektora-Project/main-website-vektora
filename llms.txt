@@ -37,6 +37,7 @@ Fakta singkat:
 
 ## Demo website usaha
 - [Company profile & katalog](https://vektoraproject.com/demo/company-profile-katalog/)
+- [Company profile logistik, lukisan yang robek saat di-scroll](https://vektoraproject.com/demo/company-profile-baharsa/)
 - [Brand parfum](https://vektoraproject.com/demo/parfum-lirih/)
 - [Kafe](https://vektoraproject.com/demo/fnb-cafe/)
 - [Restoran](https://vektoraproject.com/demo/fnb-restaurant/)
