@@ -55,6 +55,7 @@ h1{font-family:'Grotesk',ui-sans-serif,system-ui,sans-serif;font-weight:600;font
 
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:-28px;position:relative;z-index:2}
 .cards.fnb{margin-top:0}
+.cards.fnb-4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .card .thumb{aspect-ratio:16/10;background:#0e1820;border-bottom:1px solid var(--line);overflow:hidden}
 .card .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left}
@@ -103,7 +104,7 @@ footer a:hover{color:var(--text)}
 footer nav{display:flex;gap:18px;flex-wrap:wrap}
 
 @media (max-width:1000px){
-  .cards{grid-template-columns:minmax(0,1fr)}
+  .cards,.cards.fnb-4{grid-template-columns:minmax(0,1fr)}
   .card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .card .thumb{aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line)}
 }
@@ -239,8 +240,8 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
 
     <section class="block" aria-labelledby="fnb" id="website-fnb">
       <h3 id="fnb">Website F&amp;B (bahasa Inggris)</h3>
-      <p class="sub">Contoh website untuk kafe, restoran, dan toko kue, dibuat untuk calon klien di Australia, Singapura, Malaysia, dan Amerika Serikat. Ketiga usahanya fiktif.</p>
-      <div class="cards fnb">
+      <p class="sub">Contoh website untuk kafe, restoran, dan toko kue, dibuat untuk calon klien di Australia, Singapura, Malaysia, dan Amerika Serikat. Keempat usahanya fiktif.</p>
+      <div class="cards fnb fnb-4">
       <article class="card">
         <a class="thumb" href="fnb-cafe/" tabindex="-1" aria-hidden="true"><img src="img/fnb-cafe.jpg" width="1440" height="900" alt="" loading="lazy"></a>
         <div class="body">
@@ -284,6 +285,21 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
           </ul>
           <div class="end"><a class="btn primary" href="fnb-bakery/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Tanggal ambil menolak hari libur toko secara otomatis.</div></div>
+        </div>
+      </article>
+      <article class="card">
+        <a class="thumb" href="fnb-wobble/" tabindex="-1" aria-hidden="true"><img src="img/fnb-wobble.jpg" width="1440" height="900" alt="" loading="lazy"></a>
+        <div class="body">
+          <div class="cat">Website Kafe · gaya 3D</div>
+          <h2>Wobble Coffee Club</h2>
+          <p>Website kafe yang tampil mencolok: dua warna berani, bentuk bergelombang, dan cangkir serta biji kopi 3D yang jatuh pelan. Langkah program member muncul sebagai kartu warna-warni saat di-scroll.</p>
+          <ul class="try">
+            <li>Gerakkan kursor di bagian atas, objek 3D ikut bergeser</li>
+            <li>Scroll ke bagian "4 steps" dan lihat kartunya bertumpuk</li>
+            <li>Tambahkan menu ke pesanan lalu pilih jam ambil</li>
+          </ul>
+          <div class="end"><a class="btn primary" href="fnb-wobble/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="fit">Jam ambil hanya muncul di dalam jam buka kafe.</div></div>
         </div>
       </article>
       </div>
