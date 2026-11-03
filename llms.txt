@@ -38,7 +38,7 @@ Fakta singkat:
 ## Demo website usaha
 - [Company profile & katalog](https://vektoraproject.com/demo/company-profile-katalog/)
 - [Company profile logistik, lukisan yang robek saat di-scroll](https://vektoraproject.com/demo/company-profile-baharsa/)
-- [Rental mobil dengan order online: garasi 3D, cek jadwal unit, pesan ke WhatsApp](https://vektoraproject.com/demo/rental-mobil-rodaya/)
+- [Sewa supercar dengan order online: garasi 3D, paket, cek jadwal unit, pesan ke WhatsApp](https://vektoraproject.com/demo/rental-mobil-rodaya/)
 - [Brand parfum](https://vektoraproject.com/demo/parfum-lirih/)
 - [Kafe](https://vektoraproject.com/demo/fnb-cafe/)
 - [Restoran](https://vektoraproject.com/demo/fnb-restaurant/)
