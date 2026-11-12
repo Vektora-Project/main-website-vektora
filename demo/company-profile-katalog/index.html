@@ -90,6 +90,27 @@ h1 span{color:var(--muted)}
 .lead{font-size:18px;color:var(--ink-2);max-width:46ch;margin:0 0 30px}
 .cta-row{display:flex;flex-wrap:wrap;gap:10px}
 .stage{position:relative;aspect-ratio:5/4;background:var(--tile);border-radius:14px;overflow:hidden}
+.stage.photo{aspect-ratio:7/6;overflow:visible;background:none}
+.stage.photo img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+.stage.photo figcaption{left:16px;top:14px;background:rgba(255,255,255,.85);border-radius:6px;padding:3px 8px;color:var(--ink-2)}
+.stage .float{position:absolute;left:-28px;bottom:28px;background:var(--card);border-radius:10px;padding:14px 18px;box-shadow:0 18px 40px rgba(23,24,26,.14);max-width:240px}
+.stage .float b{display:block;font-size:17px;letter-spacing:-.01em}
+.stage .float span{font-size:13.5px;color:var(--muted)}
+.reelwrap{overflow:hidden;padding-block:26px;border-bottom:1px solid var(--line);background:var(--paper)}
+.reel{display:flex;gap:14px;width:max-content;animation:reel 70s linear infinite}
+.reelwrap:hover .reel{animation-play-state:paused}
+@keyframes reel{to{transform:translateX(-50%)}}
+.rc{display:block;width:180px;text-decoration:none;flex:none}
+.rc img{width:180px;height:180px;object-fit:cover;border-radius:10px;background:var(--tile)}
+.rc span{display:block;font-size:13.5px;color:var(--ink-2);margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shop{display:grid;grid-template-columns:1.6fr .9fr 1fr;gap:16px;margin-top:56px;align-items:stretch}
+.shop figure{margin:0;position:relative;border-radius:12px;overflow:hidden;background:var(--tile);min-height:360px}
+.shop img,.shop video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shop figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.9);border-radius:6px;padding:4px 9px;font-size:13px}
+.shop .m3{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;gap:4px;background:var(--card)}
+.shop .m3 b{font-size:40px;font-weight:500;letter-spacing:-.03em;line-height:1}
+.shop .m3 span{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+@media (prefers-reduced-motion:reduce){.reel{animation:none}}
 .stage svg{position:absolute}
 .stage .a{width:58%;left:2%;bottom:6%}
 .stage .b{width:46%;right:3%;bottom:20%}
@@ -143,6 +164,10 @@ select.sort{border:1px solid var(--line);background:var(--card);border-radius:7p
 .prod:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .prod .art{background:var(--tile);aspect-ratio:6/5;display:grid;place-items:center;position:relative}
 .prod .art svg{width:86%;height:auto}
+.prod .art{aspect-ratio:1/1;overflow:hidden}
+.prod .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.prod:hover .art img{transform:scale(1.04)}
+.prod .tag{z-index:1}
 .prod .tag{position:absolute;left:10px;top:10px;background:var(--card);border-radius:5px;padding:2px 8px;font-size:12px;font-weight:500}
 .prod .tag.g{background:var(--green-soft);color:var(--green)}
 .prod .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
@@ -189,6 +214,11 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
 .pd{width:min(980px,calc(100vw - 32px));max-height:calc(100dvh - 48px);background:var(--card);border-radius:14px;display:grid;grid-template-columns:1fr 1.05fr;overflow:hidden}
 .pd .left{background:var(--tile);display:flex;flex-direction:column;justify-content:center;padding:28px;position:relative}
 .pd .left svg{width:100%;height:auto;max-width:430px;margin:auto}
+.pd .left{padding:0;justify-content:flex-start}
+.pd .left .pdph{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.pd .left .pv{padding:14px 18px 18px;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.pd .left .pv svg{max-width:120px}
+.pd .left .pv .cap{text-align:left;margin:0}
 .pd .left .cap{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;margin-top:8px}
 .pd .right{padding:28px 30px;overflow:auto}
 .x{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;display:grid;place-items:center;z-index:2}
@@ -265,8 +295,10 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
   .facts .wrap>div:nth-child(3){padding-left:0;border-left:0}
   .facts .wrap>div:nth-child(n+3){border-top:1px solid var(--line)}
   .pd{grid-template-columns:1fr;overflow:auto}
-  .pd .left{padding:20px}
-  .pd .left svg{max-width:300px}
+  .pd .left .pdph{aspect-ratio:16/10}
+  .shop{grid-template-columns:1fr 1fr}
+  .shop .m1{grid-column:1/-1}
+  .stage .float{left:12px}
   .pd .right{overflow:visible}
 }
 @media (max-width:760px){
@@ -294,8 +326,12 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
   .chip{white-space:nowrap}
   .rfq-btn .t{display:none}
   .est{position:sticky;bottom:0;background:var(--card);padding-bottom:14px;z-index:1}
-  .pd .left{padding:12px 16px}
-  .pd .left svg{max-width:220px}
+  .pd .left .pdph{aspect-ratio:16/9}
+  .pd .left .pv{grid-template-columns:80px 1fr;padding:10px 16px}
+  .shop{grid-template-columns:1fr}
+  .shop figure{min-height:260px}
+  .rc,.rc img{width:140px}
+  .rc img{height:140px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media print{
@@ -330,7 +366,7 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
         <p class="lead">Box, pouch, paper bag, dan label untuk usaha makanan, kosmetik, dan fashion. Desain kami bantu, sampel bisa dicek dulu, produksi 7 sampai 14 hari kerja.</p>
         <div class="cta-row"><a class="btn line" href="#katalog">Lihat katalog</a><a class="tlink" href="#kontak">Konsultasi kebutuhan →</a></div>
       </div>
-      <figure class="stage" id="stage" aria-label="Ilustrasi paper bag, standing pouch, dan box mailer" style="margin:0"><figcaption>LK-PB-101 · LK-PC-110 · LK-BX-101</figcaption></figure>
+      <figure class="stage photo" style="margin:0"><img src="../media/katalog/hero.jpg" alt="Hard box kraft dengan tutup laci berisi produk tekstil" fetchpriority="high"><figcaption>LK-BX-205 · Hard box laci, kraft 2 mm</figcaption><div class="float"><b>Sampel jadi 3 hari</b><span>Cek warna dan ukuran sebelum produksi</span></div></figure>
     </div>
   </section>
 
@@ -342,6 +378,8 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
       <div><b>1.200+</b><span>brand pernah dilayani</span></div>
     </div>
   </div>
+
+  <div class="reelwrap" aria-label="Contoh produk"><div class="reel" id="reel"></div></div>
 
   <section class="block" id="profil" aria-labelledby="profilT">
     <div class="wrap">
@@ -360,6 +398,11 @@ dialog::backdrop{background:rgba(23,24,26,.42)}
           <div><dt>Bahan</dt><dd>Kertas dan plastik food grade untuk kemasan makanan</dd></div>
           <div><dt>Pengiriman</dt><dd>Seluruh Indonesia lewat ekspedisi rekanan</dd></div>
         </dl>
+      </div>
+      <div class="shop">
+        <figure class="m1"><img src="../media/katalog/press.jpg" alt="Mesin cetak sedang mencetak lembaran" loading="lazy"><figcaption>Mesin offset, shift pagi</figcaption></figure>
+        <figure class="m2"><video src="../media/katalog/seal.mp4" poster="../media/katalog/seal.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><figcaption>Dikemas per bundel, dicek sebelum dikirim</figcaption></figure>
+        <div class="m3"><b>48.000</b><span>box dan pouch keluar dari workshop setiap bulan</span><b>3 hari</b><span>untuk satu sampel cetak, sebelum produksi massal</span></div>
       </div>
       <div class="svc">
         <div><span class="no">01</span><h3>Desain dan mockup</h3><p>Kirim logo, kami siapkan dielines dan mockup. Revisi sampai ukuran dan warna pas.</p></div>
@@ -519,13 +562,14 @@ const P=[
 const byId=Object.fromEntries(P.map(p=>[p.id,p]));
 const CATS=['Semua','Box','Pouch','Paper bag','Label','Food service'];
 const moq=p=>p.tiers[0][0];
+const PH=p=>'../media/katalog/p-'+p.id+'.jpg';
 function unit(p,qty,si,fi){let t=p.tiers[0];for(const x of p.tiers)if(qty>=x[0])t=x;return Math.round(t[1]*p.sf[si]*p.ff[fi]/10)*10}
 
 // Hero
-const stage=$('#stage');
-stage.insertAdjacentHTML('beforeend',art(byId.bag,'kraft').replace('<svg','<svg class="a"')+art(byId.pouch,'hitam','Tanpa jendela').replace('<svg','<svg class="b"')+art(byId.mailer,'putih').replace('<svg','<svg class="c"'));
-stage.querySelectorAll('svg').forEach(s=>s.removeAttribute('role'));
+// Strip foto produk yang bergerak pelan di bawah hero
+$('#reel').innerHTML=[...P,...P].map((p,i)=>`<a href="#katalog" class="rc"${i>=P.length?' aria-hidden="true" tabindex="-1"':''}><img src="${PH(p)}" alt="" loading="lazy"><span>${p.name}</span></a>`).join('');
 
+{const v=document.querySelector('.shop video');if(v)new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)v.play().catch(()=>{});else v.pause()})).observe(v)}
 // Katalog
 let cat='Semua',q='',sort='rek';
 $('#cats').innerHTML=CATS.map(c=>`<button class="chip" type="button" data-c="${c}" aria-pressed="${c===cat}">${c}<small>${c==='Semua'?P.length:P.filter(p=>p.cat===c).length}</small></button>`).join('');
@@ -537,7 +581,7 @@ function render(){
   list.sort(sort==='moq'?(a,b)=>moq(a)-moq(b)||a.rank-b.rank:sort==='harga'?(a,b)=>a.tiers.at(-1)[1]-b.tiers.at(-1)[1]:(a,b)=>a.rank-b.rank);
   $('#count').textContent=list.length+' produk'+(cat!=='Semua'?' · '+cat:'')+(q?' · "'+q+'"':'');
   $('#grid').innerHTML=list.length?list.map(p=>`<button class="prod" type="button" data-id="${p.id}">
-    <span class="art">${p.tag?`<span class="tag${p.tag==='Food grade'?' g':''}">${p.tag}</span>`:''}${art(p)}</span>
+    <span class="art">${p.tag?`<span class="tag${p.tag==='Food grade'?' g':''}">${p.tag}</span>`:''}<img src="${PH(p)}" alt="" loading="lazy"></span>
     <span class="bd"><span class="sku">${p.sku}</span><h3>${p.name}</h3><p class="mat">${p.mat}</p>
     <span class="foot"><span class="price">mulai<b>${rp(p.tiers.at(-1)[1]*Math.min(...p.sf))}/pcs</b>min. ${num(moq(p))} pcs</span><span class="dots" aria-label="Warna: ${p.colors.map(c=>CN[c]).join(', ')}">${p.colors.map(c=>`<i style="background:${C[c][0]}"></i>`).join('')}</span></span></span></button>`).join('')
     :`<div class="empty" style="grid-column:1/-1">Tidak ada produk yang cocok. Coba kata lain, atau <a href="#kontak">tanyakan langsung</a>: kami juga membuat ukuran di luar katalog.</div>`;
@@ -549,7 +593,7 @@ render();
 const pdDlg=$('#pdDlg');let cur=null;
 function openProduct(id){
   const p=byId[id];cur={p,si:Math.min(1,p.sizes.length-1),ci:0,fi:0,qty:p.tiers[Math.min(1,p.tiers.length-1)][0]};
-  $('#pd').innerHTML=`<div class="left"><div id="pdArt"></div><p class="cap" id="pdCap"></p></div>
+  $('#pd').innerHTML=`<div class="left"><img class="pdph" src="${PH(p)}" alt="Foto ${p.name}"><div class="pv"><div id="pdArt"></div><p class="cap" id="pdCap"></p></div></div>
   <div class="right"><button class="x" type="button" data-close aria-label="Tutup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <p class="sec-label" style="margin-bottom:8px">${p.cat} · <span class="mono">${p.sku}</span></p>
     <h2 id="pdName">${p.name}</h2><p class="desc">${p.desc}</p>

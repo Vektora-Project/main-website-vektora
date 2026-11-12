@@ -395,13 +395,17 @@ let imgs=null,ctx=null,lastF=-1;
 (function probe(){
   const t=new Image();
   t.onload=()=>{imgs=new Array(FRAMES);imgs[0]=t;canvas.width=t.naturalWidth;canvas.height=t.naturalHeight;ctx=canvas.getContext('2d');canvas.hidden=false;still.hidden=true;
-    for(let i=1;i<FRAMES;i++){const im=new Image();im.decoding='async';im.src=M+'croissant/c_'+String(i).padStart(3,'0')+'.webp';imgs[i]=im}
+    // Semua frame didekode dulu ke ImageBitmap supaya drawImage tidak tersendat saat scroll.
+    const bm=im=>(window.createImageBitmap?createImageBitmap(im):Promise.resolve(im));
+    bm(t).then(b=>{imgs[0]=b});
+    for(let i=1;i<FRAMES;i++){const im=new Image();im.decoding='async';im.onload=()=>{(im.decode?im.decode():Promise.resolve()).then(()=>bm(im)).then(b=>{imgs[i]=b}).catch(()=>{imgs[i]=im})};im.src=M+'croissant/c_'+String(i).padStart(3,'0')+'.webp'}
     lastF=-1;launchTick()};
   t.src=M+'croissant/c_000.webp';
 })();
 function drawFrame(f){
   if(!imgs){return}
-  let im=imgs[f];if(!im||!im.complete||!im.naturalWidth){for(let k=1;k<FRAMES;k++){const a=imgs[(f-k+FRAMES)%FRAMES];if(a&&a.complete&&a.naturalWidth){im=a;break}}}
+  const ok=a=>a&&(a.width>0)&&(a.complete!==false);
+  let im=imgs[f];if(!ok(im)){for(let k=1;k<FRAMES;k++){const a=imgs[(f-k+FRAMES)%FRAMES];if(ok(a)){im=a;break}}}
   if(!im||f===lastF)return;lastF=f;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(im,0,0);
 }
 function launchTick(){
@@ -409,7 +413,8 @@ function launchTick(){
   const p=clamp(-r.top/span);
   // Turn: one and a half turns over the first 70% of the scroll.
   const turn=clamp(p/.72);
-  if(imgs)drawFrame((Math.floor(turn*FRAMES*1.5)+20)%FRAMES);
+  // Target frame saja; frame yang digambar mengejar target dengan halus di spin() (scroll roda/trackpad tidak lompat-lompat).
+  if(imgs){fTarget=turn*FRAMES*1.5+20;if(!spinning){spinning=true;requestAnimationFrame(spin)}}
   else{pin.style.setProperty('--rot',(Math.sin(turn*Math.PI*3)*14).toFixed(2)+'deg');pin.style.setProperty('--isc',(1+Math.sin(turn*Math.PI)*.06).toFixed(3))}
   pin.style.setProperty('--io',(1-clamp(p/.14)).toFixed(3));
   specs.forEach(s=>{const at=+s.dataset.at;s.classList.toggle('on',p>=at&&p<.7)});
@@ -423,6 +428,13 @@ function launchTick(){
   pin.style.setProperty('--gl',(1-.5*d).toFixed(3));
   buy.classList.toggle('live',d>.6);
   hdr.classList.toggle('light',hdrLight()||mnav.classList.contains('on'));
+}
+let fTarget=20,fCur=20,spinning=false;
+function spin(){
+  fCur+=(fTarget-fCur)*(reduce?1:.2);
+  if(Math.abs(fTarget-fCur)<.02)fCur=fTarget;
+  drawFrame(((Math.round(fCur)%FRAMES)+FRAMES)%FRAMES);
+  if(fCur!==fTarget)requestAnimationFrame(spin);else spinning=false;
 }
 let tk=false;
 addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(()=>{launchTick();tk=false})}},{passive:true});
