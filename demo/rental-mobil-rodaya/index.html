@@ -57,8 +57,9 @@ img,svg{display:block}
 .demo-bar a{color:#fff}
 
 /* ---------- tombol ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid transparent;padding:11px 20px;font-weight:700;font-size:14.5px;text-decoration:none;line-height:1.1;white-space:nowrap;transition:transform .15s,background .15s}
-.btn:active{transform:scale(.97)}
+/* tombol: satu radius (pil) untuk seluruh halaman, padding 16/32, label 15px/600 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid transparent;padding:16px 32px;font-weight:600;font-size:15px;letter-spacing:.01em;text-decoration:none;line-height:1.1;white-space:nowrap;transition:transform 80ms ease-out,background .15s}
+.btn:active{transform:scale(.98)}
 .btn.acc{background:var(--acc);color:var(--acc-ink)}
 .btn.acc:hover{background:var(--acc-2)}
 .btn.light{background:#fff;color:#111}
@@ -83,6 +84,16 @@ nav.links{display:flex;gap:22px;font-size:14.5px;font-weight:500}
 nav.links a{text-decoration:none;color:var(--ink-2);padding:4px 0;border-bottom:2px solid transparent}
 nav.links a:hover,nav.links a.on{color:#fff;border-color:var(--acc)}
 .top .btn{margin-left:auto}
+/* satu tombol terisi per layar: saat kartu mobil terbuka, tombol header jadi garis */
+.hero.focus .top .btn.acc,.hero.cfg .top .btn.acc{background:transparent;border-color:rgba(255,255,255,.35);color:#fff}
+.menu-btn{display:none;margin-left:auto;background:none;border:0;color:#fff;font:inherit;font-size:15px;font-weight:500;padding:8px 4px}
+.menu-btn+.btn{margin-left:0}
+.mnav{position:absolute;top:64px;left:16px;right:16px;z-index:7;background:rgba(12,13,17,.94);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:8px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity 200ms ease-out,visibility 0s 200ms;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.mnav.open{opacity:1;visibility:visible;transition:opacity 200ms ease-out}
+.mnav a{color:#fff;text-decoration:none;font-size:16px;font-weight:500;padding:14px 12px;border-radius:10px}
+.mnav a.on{color:var(--acc)}
+.mnav a:hover{background:rgba(255,255,255,.06)}
+footer nav{display:flex;gap:18px}
 
 .copy{position:absolute;left:24px;bottom:34px;z-index:5;max-width:760px;transition:opacity .35s,transform .35s}
 .copy .kicker{font-family:var(--mono);font-size:12px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px}
@@ -256,6 +267,7 @@ footer a{color:#fff}
 /* ---------- HP ---------- */
 @media (max-width:980px){
   nav.links{display:none}
+  .menu-btn{display:block}
   .hero.cfg{grid-template-columns:1fr;grid-template-rows:min(58svh,520px) auto;height:auto;max-height:none}
   .hero.cfg .panel{border-left:0;overflow:visible}
   .back{top:76px}
@@ -266,7 +278,7 @@ footer a{color:#fff}
 @media (max-width:600px){
   .wrap{padding-inline:16px}
   .top{inset:14px 16px auto;gap:12px}
-  .top .btn{padding:9px 14px;font-size:13.5px}
+  .top .btn{padding:12px 20px}
   .logo{font-size:19px}
   .logo small{display:none}
   .copy{left:16px;right:16px;bottom:96px}
@@ -304,10 +316,12 @@ footer a{color:#fff}
       <span>Rodaya<small>Supercar Rental · Jakarta</small></span>
     </a>
     <nav class="links" aria-label="Menu">
-      <a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a><a href="#faq">Tanya jawab</a><a href="#kontak">Kontak</a>
+      <a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a>
     </nav>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mnav">Menu</button>
     <button class="btn acc" type="button" data-order="cur">Pesan mobil</button>
   </header>
+  <nav class="mnav" id="mnav" aria-label="Menu"><a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a></nav>
 
   <div class="copy" id="copy">
     <p class="kicker">Rodaya Supercar · Jakarta</p>
@@ -450,7 +464,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil: <a href="https://github.com/drcollect/collect-cars">Collect Cars</a> oleh drcollect, lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Warna cat diubah untuk demo ini.</span></div></footer>
+<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><nav aria-label="Lainnya"><a href="#faq">Tanya jawab</a><a href="#kontak">Kontak</a></nav><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil: <a href="https://github.com/drcollect/collect-cars">Collect Cars</a> oleh drcollect, lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Warna cat diubah untuk demo ini.</span></div></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="sheet" id="sheet"></div>
@@ -526,7 +540,9 @@ function init3D(){
  renderer.domElement.tabIndex=0;
  const scene=new THREE.Scene();
  scene.background=new THREE.Color(0x0b0c0f);
- scene.fog=new THREE.Fog(0x0b0c0f,16,42);
+ // r128 membaca warna hex sebagai linear; ubah dulu dari sRGB supaya gelapnya tidak pudar jadi abu-abu.
+ const lin=h=>new THREE.Color(h).convertSRGBToLinear();
+ scene.fog=new THREE.Fog(lin(0x0b0c0f),16,42);
  const camera=new THREE.PerspectiveCamera(36,1,.1,120);
  let dirty=true;
 
@@ -548,7 +564,9 @@ function init3D(){
  const key=new THREE.DirectionalLight(0xffffff,1.4);key.position.set(4,10,6);scene.add(key);
 
  // Lantai, garis petak, nomor petak
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:0x08090b,roughness:.36,metalness:.3,envMapIntensity:.5}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+ // Lantai epoksi mengilap: semi-transparan di atas salinan garasi yang dicerminkan (pantulan murah tanpa render kedua).
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:lin(0x0c0d10),roughness:.22,metalness:.15,envMapIntensity:.45,transparent:true,opacity:.86}));floor.rotation.x=-Math.PI/2;floor.renderOrder=1;scene.add(floor);
+ const mirror=new THREE.Group();mirror.matrixAutoUpdate=false;mirror.matrix.makeScale(1,-1,1);scene.add(mirror);
  const lineMat=new THREE.MeshBasicMaterial({color:0xd9dce0});
  const lineG=new THREE.PlaneGeometry(1,1);
  const addLine=(x,z,w,d)=>{const m=new THREE.Mesh(lineG,lineMat);m.rotation.x=-Math.PI/2;m.scale.set(w,d,1);m.position.set(x,.004,z);scene.add(m)};
@@ -560,23 +578,27 @@ function init3D(){
  const canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g);const tx=new THREE.CanvasTexture(c);tx.encoding=THREE.sRGBEncoding;tx.anisotropy=4;redraw.push(()=>{g.clearRect(0,0,w,h);draw(g);tx.needsUpdate=true});return tx};
  const numTex=t=>canvasTex(256,128,g=>{g.fillStyle='#d9dce0';g.font='800 96px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,68)});
  document.fonts&&document.fonts.load('800 96px Archivo').then(()=>redraw.forEach(f=>f()));
- const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshBasicMaterial({color:0x17191d}));wall.position.set(0,7,-5.2);scene.add(wall);
+ const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshStandardMaterial({color:lin(0x1a1c21),roughness:.9}));wall.position.set(0,7,-5.2);scene.add(wall);mirror.add(wall.clone());
+ // lampu strip tegak di dinding, satu di tiap garis petak
+ {const stripM=new THREE.MeshBasicMaterial();stripM.color.setScalar(2.2);const stripG=new THREE.PlaneGeometry(.06,4.6);
+  for(let i=0;i<=N;i++){const st=new THREE.Mesh(stripG,stripM);st.position.set(x0-GAP/2+i*GAP,2.3,-5.18);scene.add(st);mirror.add(st.clone())}}
  {const tx=canvasTex(2048,400,g=>{g.fillStyle='#e8e8e4';g.font='800 300px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('rodaya',1024,190);g.fillStyle='#FFB21E';g.fillRect(560,350,928,18)});
-  const sign=new THREE.Mesh(new THREE.PlaneGeometry(12.2,2.4),new THREE.MeshBasicMaterial({map:tx,transparent:true,opacity:.92}));sign.position.set(0,2.75,-5.15);scene.add(sign);}
+  const sign=new THREE.Mesh(new THREE.PlaneGeometry(12.2,2.4),new THREE.MeshBasicMaterial({map:tx,transparent:true,opacity:.92}));sign.position.set(0,2.75,-5.15);scene.add(sign);mirror.add(sign.clone());}
  // Plafon heksagon bercahaya
  const hexMat=new THREE.MeshBasicMaterial({color:0xf2f4f7,side:THREE.DoubleSide,fog:true});
  const hexG=new THREE.RingGeometry(.86,.94,6,1);hexG.rotateX(Math.PI/2);hexG.rotateY(Math.PI/6);
  const hw=Math.sqrt(3)*.94;
  const hexes=new THREE.InstancedMesh(hexG,hexMat,26*7);let k=0;const mtx=new THREE.Matrix4();
  for(let r=0;r<7;r++)for(let q=0;q<26;q++){mtx.makeTranslation((q-12.5)*hw+(r%2?hw/2:0),5.2,-4.4+r*1.42);hexes.setMatrixAt(k++,mtx)}
- hexes.count=k;scene.add(hexes);
+ hexes.count=k;scene.add(hexes);mirror.add(hexes.clone());
  const blobTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,6,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.85)');gr.addColorStop(.6,'rgba(0,0,0,.45)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)})();
 
  // ---------- muat model mobil (glTF + Draco) ----------
  const ROW_YAW=.62; // model menghadap +Z; diputar sedikit supaya terlihat 3/4 dari kamera
  const loader=new THREE.GLTFLoader();const draco=new THREE.DRACOLoader();draco.setDecoderPath(DRACO_DIR);loader.setDRACOLoader(draco);
  const holders=CARS.map((c,i)=>{const h=new THREE.Group();h.position.set(x0+i*GAP,0,0);h.rotation.y=ROW_YAW;h.userData.i=i;scene.add(h);c.obj=h;c.h=1.25;
-  const n=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.55),new THREE.MeshBasicMaterial({map:numTex(c.no),transparent:true,depthWrite:false}));n.rotation.x=-Math.PI/2;n.position.set(x0+i*GAP,.006,3.4);scene.add(n);return h});
+  const n=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.55),new THREE.MeshBasicMaterial({map:numTex(c.no),transparent:true,depthWrite:false}));n.rotation.x=-Math.PI/2;n.position.set(x0+i*GAP,.006,3.4);n.renderOrder=2;scene.add(n);
+  c.mobj=new THREE.Group();c.mobj.position.copy(h.position);c.mobj.rotation.y=ROW_YAW;mirror.add(c.mobj);return h});
  let loaded=0;const loadEl=$('#loading');loadEl.textContent='Memuat mobil 0/'+N;
  const ready=CARS.map(c=>new Promise(res=>{
   loader.load(MODEL_DIR+c.model+'.glb',gltf=>{
@@ -584,7 +606,8 @@ function init3D(){
    m.traverse(o=>{if(!o.isMesh)return;const mt=o.material;if(mt&&/paint|graphite/i.test(mt.name))c.paints.push(mt)});
    c.paints=[...new Set(c.paints)];
    const box=new THREE.Box3().setFromObject(m);c.h=box.max.y;c.len=box.max.z-box.min.z;c.wid=box.max.x-box.min.x;
-   const sh=new THREE.Mesh(new THREE.PlaneGeometry(c.wid*1.6,c.len*1.25),new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=.006;m.add(sh);
+   c.mobj.add(m.clone());
+   const sh=new THREE.Mesh(new THREE.PlaneGeometry(c.wid*1.6,c.len*1.25),new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=.006;sh.renderOrder=2;m.add(sh);
    c.gltf=m;c.obj.add(m);paint(c);
    c.obj.scale.setScalar(.001);c.obj.userData.grow=true;
    loadEl.textContent='Memuat mobil '+(++loaded)+'/'+N;if(loaded===N)loadEl.classList.add('done');res(c);
@@ -593,7 +616,7 @@ function init3D(){
  function paint(c){dirty=true;(c.paints||[]).forEach(m=>{m.color.set(c.colors[c.color][1]).convertSRGBToLinear()})}
 
  // cincin putar untuk mode pesan
- const ring=new THREE.Mesh(new THREE.RingGeometry(3.05,3.12,96),new THREE.MeshBasicMaterial({color:0xFFB21E,transparent:true,opacity:0}));ring.rotation.x=-Math.PI/2;ring.position.y=.008;scene.add(ring);
+ const ring=new THREE.Mesh(new THREE.RingGeometry(3.05,3.12,96),new THREE.MeshBasicMaterial({color:0xFFB21E,transparent:true,opacity:0}));ring.rotation.x=-Math.PI/2;ring.position.y=.008;ring.renderOrder=2;scene.add(ring);
 
  // ---------- kamera ----------
  const cam={pos:new THREE.Vector3(),tgt:new THREE.Vector3()};
@@ -653,7 +676,8 @@ function init3D(){
   CARS.forEach((c,i)=>{const o=c.obj;const sel=i===S.idx;
    const y=S.mode==='cfg'&&sel?0:ROW_YAW;o.rotation.y+=(y-o.rotation.y)*k;
    o.visible=S.mode!=='cfg'||sel;
-   if(o.userData.grow){const s=o.scale.x+(1-o.scale.x)*(reduce?1:Math.min(1,k*1.4));o.scale.setScalar(s);if(s>.999){o.scale.setScalar(1);o.userData.grow=false}}});
+   if(o.userData.grow){const s=o.scale.x+(1-o.scale.x)*(reduce?1:Math.min(1,k*1.4));o.scale.setScalar(s);if(s>.999){o.scale.setScalar(1);o.userData.grow=false}}
+   c.mobj.rotation.y=o.rotation.y;c.mobj.scale.copy(o.scale);c.mobj.visible=o.visible});
   ring.position.x=x0+S.idx*GAP;ring.material.opacity+=((S.mode==='cfg'?.55:0)-ring.material.opacity)*k;
   renderer.render(scene,camera);
   if(S.mode==='cfg'){hsPos.set(0,car().h+.08,0);car().obj.localToWorld(hsPos);hsPos.project(camera);
@@ -822,8 +846,13 @@ $$('#filters button').forEach(b=>b.onclick=()=>{$$('#filters button').forEach(x=
 if(G)G.ready.then(()=>{try{const t=G.thumbs();CARS.forEach((c,i)=>{if(!t[i])return;const img=new Image();img.alt=c.nick+', '+c.type;img.width=640;img.height=400;img.src=t[i];c.card.querySelector('.pic').append(img)})}catch(e){console.warn(e)}});
 
 /* ---------- nav aktif ---------- */
-const navA=$$('nav.links a');
-['hero','armada','cara','faq','kontak'].forEach(id=>{const el=document.getElementById(id);el&&new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id))}),{rootMargin:'-45% 0px -50% 0px'}).observe(el)});
+const navA=$$('nav.links a, .mnav a');
+const mnav=$('#mnav'), menuBtn=$('#menuBtn');
+const setMenu=o=>{mnav.classList.toggle('open',o);menuBtn.setAttribute('aria-expanded',o)};
+menuBtn.onclick=()=>setMenu(!mnav.classList.contains('open'));
+mnav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+['hero','armada','cara'].forEach(id=>{const el=document.getElementById(id);el&&new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id))}),{rootMargin:'-45% 0px -50% 0px'}).observe(el)});
 
 update();calc();
 })();

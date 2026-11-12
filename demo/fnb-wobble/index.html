@@ -68,14 +68,22 @@ button{font:inherit;cursor:pointer}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-size:1.45rem;line-height:1}
 .logo svg{flex:none}
 .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-weight:600}
-.nav ul a{text-decoration:none}
-.nav ul a:hover{color:var(--butter)}
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:800;text-decoration:none;transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.nav ul a{text-decoration:none;padding:4px 0;border-bottom:3px solid transparent}
+.nav ul a:hover,.nav ul a.on{color:var(--butter)}
+.nav ul a.on{border-color:var(--butter)}
+/* tombol: satu radius (pil), padding 16/32, label 16px/600, tekan 0.98 selama 80ms */
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:16px 32px;white-space:nowrap;font-size:16px;font-weight:600;letter-spacing:.01em;text-decoration:none;transition:transform 80ms ease-out,box-shadow .2s}
 .btn:hover{transform:translateY(-2px) rotate(-1.5deg)}
+.btn:active{transform:scale(.98)}
 .btn-tang{background:var(--tang);color:var(--ink);box-shadow:0 4px 0 var(--ink)}
 .btn-butter{background:var(--butter);color:var(--ink);box-shadow:0 4px 0 var(--ink)}
 .btn-ghost{background:transparent;color:var(--white);box-shadow:inset 0 0 0 2px var(--white)}
-@media (max-width:760px){.nav ul{display:none}.nav .btn{padding:10px 16px;font-size:.92rem}}
+.menu-btn{display:none;margin-left:auto;background:none;border:0;color:var(--white);font:inherit;font-weight:600;font-size:16px;padding:8px 4px;cursor:pointer}
+.mnav{position:absolute;left:16px;right:16px;top:calc(100% + 8px);background:var(--ink);border-radius:20px;padding:8px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity 200ms ease-out,visibility 0s 200ms}
+.mnav.open{opacity:1;visibility:visible;transition:opacity 200ms ease-out}
+.mnav a{color:var(--white);text-decoration:none;font-weight:600;font-size:17px;padding:14px 12px;border-radius:12px}
+.mnav a.on{color:var(--butter)}
+@media (max-width:760px){.nav ul{display:none}.menu-btn{display:block}.nav .btn{padding:12px 18px}.nav .wrap{gap:12px}}
 
 /* hero */
 .hero{position:relative;background:var(--cobalt);color:var(--white);overflow:hidden;isolation:isolate}
@@ -206,8 +214,10 @@ footer small{font-family:var(--mono);opacity:.85}
       <li><a href="#menu">Menu</a></li>
       <li><a href="#visit">Visit</a></li>
     </ul>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mnav">Menu</button>
     <a class="btn btn-tang" href="#menu">Order ahead</a>
   </div>
+  <div class="mnav" id="mnav"><a href="#how">How it works</a><a href="#menu">Menu</a><a href="#visit">Visit</a></div>
 </nav>
 
 <header class="hero" id="top">
@@ -223,7 +233,7 @@ footer small{font-family:var(--mono);opacity:.85}
       <h1>Coffee worth <em>falling</em> <span>for.</span></h1>
       <p>A small, loud coffee bar on Ferris Lane. Single-origin espresso, brown-butter bakes, and a pickup shelf so you never wait in line.</p>
       <div class="ctas">
-        <a class="btn btn-butter" href="#menu">See the menu</a>
+        <a class="btn btn-ghost" href="#menu">See the menu</a>
         <a class="btn btn-ghost" href="#how">How the club works</a>
       </div>
     </div>
@@ -334,6 +344,8 @@ footer small{font-family:var(--mono);opacity:.85}
 </aside>
 
 <script src="../vendor/three.min.js"></script>
+<script src="../vendor/GLTFLoader.js"></script>
+<script src="../vendor/DRACOLoader.js"></script>
 <script>
 (function(){
   /* ---------- hours + open status ---------- */
@@ -438,6 +450,16 @@ footer small{font-family:var(--mono);opacity:.85}
   });
   renderCart();
 
+  /* ---------- nav: current section marker + mobile menu ---------- */
+  var mnav=document.getElementById("mnav"), menuBtn=document.getElementById("menuBtn");
+  function setMenu(o){mnav.classList.toggle("open",o);menuBtn.setAttribute("aria-expanded",o?"true":"false")}
+  menuBtn.addEventListener("click",function(){setMenu(!mnav.classList.contains("open"))});
+  mnav.addEventListener("click",function(e){if(e.target.closest("a"))setMenu(false)});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")setMenu(false)});
+  var navA=[].slice.call(document.querySelectorAll(".nav ul a, .mnav a"));
+  if("IntersectionObserver" in window)["how","menu","visit"].forEach(function(id){var el=document.getElementById(id);if(!el)return;
+    new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)navA.forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)})})},{rootMargin:"-45% 0px -50% 0px"}).observe(el)});
+
   /* ---------- sticky cards: shrink the one underneath ---------- */
   var cards=[].slice.call(document.querySelectorAll(".card"));
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -459,12 +481,23 @@ footer small{font-family:var(--mono);opacity:.85}
   var renderer;
   try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true})}catch(err){return}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
   var scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(35,1,0.1,100);
   camera.position.set(0,0,22);
-  scene.add(new THREE.HemisphereLight(0xffffff,0x2337ff,0.85));
-  var key=new THREE.DirectionalLight(0xffffff,0.9);key.position.set(6,10,8);scene.add(key);
-  var rim=new THREE.DirectionalLight(0xffe14d,0.5);rim.position.set(-8,-4,4);scene.add(rim);
+  // Pantulan studio buatan sendiri (tanpa file HDR): ruang gelap kebiruan + panel lampu softbox.
+  var pm=new THREE.PMREMGenerator(renderer), env=new THREE.Scene(), boxG=new THREE.BoxGeometry(1,1,1);
+  var room=new THREE.Mesh(boxG,new THREE.MeshBasicMaterial({color:0x1a2a9a,side:THREE.BackSide}));room.scale.set(30,30,30);env.add(room);
+  [[0,12,4,14,.3,8,7],[-13,2,6,.3,8,10,3],[12,4,8,.3,6,6,2.4],[0,-12,0,20,.3,20,.6]].forEach(function(p){
+    var m=new THREE.MeshBasicMaterial();m.color.setScalar(p[6]);var l=new THREE.Mesh(boxG,m);l.position.set(p[0],p[1],p[2]);l.scale.set(p[3],p[4],p[5]);env.add(l)});
+  var warm=new THREE.Mesh(boxG,new THREE.MeshBasicMaterial({color:0xff9a3d}));warm.position.set(-6,-4,-13);warm.scale.set(10,6,.3);env.add(warm);
+  scene.environment=pm.fromScene(env,.03).texture;
+  var key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(6,10,8);scene.add(key);
+  var rim=new THREE.DirectionalLight(0xffe14d,0.6);rim.position.set(-8,-4,4);scene.add(rim);
 
+  // Model dibuat di Blender (sumber/wobble/objek.py) -> ../models/wobble.glb (Draco).
+  var MODEL_URL='../models/wobble.glb', DRACO_DIR='../vendor/draco/';
+  // Cadangan kalau GLB gagal dimuat: objek sederhana dari geometri dasar.
   function mat(c,r){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?0.45:r,metalness:0})}
   var M={cup:mat(0xffffff,.3),coffee:mat(0x5a2e16,.25),bean:mat(0x6b3a1e,.4),groove:mat(0x2a140a,.6),
     dough:mat(0xe8a35c,.6),glaze:mat(0xff8cc6,.25),lid:mat(0x14112b,.5),sleeve:mat(0xff6a1a,.6),paper:mat(0xfff8ef,.5),
@@ -505,7 +538,6 @@ footer small{font-family:var(--mono);opacity:.85}
     var top=new THREE.Mesh(new THREE.CylinderGeometry(0.85,1.0,0.2,32),M.lid);top.position.y=1.58;g.add(top);
     return g;
   }
-  var makers=[makeCup,makeBean,makeDonut,makeTakeaway,makeBean,makeCup,makeBean,makeDonut];
   var objs=[], view={w:10,h:10};
 
   function resize(){
@@ -513,10 +545,11 @@ footer small{font-family:var(--mono);opacity:.85}
     view.h=2*Math.tan(camera.fov*Math.PI/360)*camera.position.z;view.w=view.h*camera.aspect;
   }
   function placeX(){
-    // keep most objects to the sides so the headline stays readable
-    var side=Math.random()<0.5?-1:1, narrow=view.w<9;
-    var min=narrow?0.36:0.34, x=(min+Math.random()*(0.5-min))*view.w*side;
-    return x;
+    // judul ada di kiri: di layar lebar objek kebanyakan jatuh di separuh kanan, sisanya di tepi kiri
+    var narrow=view.w<9;
+    if(narrow){var side=Math.random()<0.5?-1:1;return (0.36+Math.random()*0.14)*view.w*side}
+    if(Math.random()<0.8)return (0.08+Math.random()*0.38)*view.w;
+    return -(0.44+Math.random()*0.06)*view.w;
   }
   function spawn(o,initial){
     o.mesh.position.x=placeX();
@@ -527,12 +560,29 @@ footer small{font-family:var(--mono);opacity:.85}
     o.sway=Math.random()*Math.PI*2;
   }
   resize();
-  var count=view.w<9?5:9;
-  for(var k=0;k<count;k++){
-    var m=makers[k%makers.length]();var sc=0.75+Math.random()*0.45;m.scale.setScalar(sc*(view.w<9?0.6:0.95));
-    m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);scene.add(m);
-    var ob={mesh:m};spawn(ob,true);objs.push(ob);
+  // Urutan jatuh: cangkir, biji, donat, takeaway, biji, cangkir, biji, donat, biji.
+  var ORDER=["cup","bean","donut","takeaway","bean","cup","bean","donut","bean"], SIZE={cup:1,bean:1.15,donut:1.05,takeaway:1};
+  function populate(src){
+    var count=view.w<9?5:9;
+    for(var k=0;k<count;k++){
+      var name=ORDER[k%ORDER.length], m=src[name].clone();
+      var sc=(0.85+Math.random()*0.35)*SIZE[name];m.scale.setScalar(sc*(view.w<9?0.62:1));
+      m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);scene.add(m);
+      var ob={mesh:m};spawn(ob,true);objs.push(ob);
+    }
+    if(reduce)renderer.render(scene,camera);
   }
+  function fallback(){populate({cup:makeCup(),bean:makeBean(),donut:makeDonut(),takeaway:makeTakeaway()})}
+  if(THREE.GLTFLoader&&THREE.DRACOLoader){
+    var loader=new THREE.GLTFLoader(), draco=new THREE.DRACOLoader();draco.setDecoderPath(DRACO_DIR);loader.setDRACOLoader(draco);
+    loader.load(MODEL_URL,function(g){
+      var src={};g.scene.children.forEach(function(o){src[o.name]=o});
+      if(!src.cup||!src.bean||!src.donut||!src.takeaway){fallback();return}
+      // ukuran model Blender ~2 satuan; diperbesar supaya sebanding dengan judul
+      Object.keys(src).forEach(function(k){var w=new THREE.Group();src[k].position.set(0,0,0);w.add(src[k]);w.scale.setScalar(1.2);var h=new THREE.Group();h.add(w);src[k]=h});
+      populate(src);
+    },undefined,function(e){console.warn("wobble.glb gagal dimuat",e);fallback()});
+  }else fallback();
   var mouse={x:0,y:0};
   hero.addEventListener("pointermove",function(e){var r=hero.getBoundingClientRect();mouse.x=(e.clientX-r.left)/r.width-0.5;mouse.y=(e.clientY-r.top)/r.height-0.5});
   window.addEventListener("resize",resize);
@@ -556,7 +606,7 @@ footer small{font-family:var(--mono);opacity:.85}
     }
     requestAnimationFrame(frame);
   }
-  if(reduce){renderer.render(scene,camera)}else{requestAnimationFrame(frame)}
+  if(!reduce)requestAnimationFrame(frame);
 })();
 </script>
 
