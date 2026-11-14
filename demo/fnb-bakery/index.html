@@ -402,11 +402,13 @@ let imgs=null,ctx=null,lastF=-1;
     lastF=-1;launchTick()};
   t.src=M+'croissant/c_000.webp';
 })();
-function drawFrame(f){
+// Satu frame utuh per gambar (tanpa pembauran, jadi tidak ada bayangan ganda); kehalusannya dari frame yang rapat.
+function drawFrame(x){
   if(!imgs){return}
   const ok=a=>a&&(a.width>0)&&(a.complete!==false);
-  let im=imgs[f];if(!ok(im)){for(let k=1;k<FRAMES;k++){const a=imgs[(f-k+FRAMES)%FRAMES];if(ok(a)){im=a;break}}}
-  if(!im||f===lastF)return;lastF=f;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(im,0,0);
+  const a0=((Math.round(x)%FRAMES)+FRAMES)%FRAMES;
+  let im=imgs[a0];if(!ok(im)){for(let k=1;k<FRAMES;k++){const a=imgs[(a0-k+FRAMES)%FRAMES];if(ok(a)){im=a;break}}}
+  if(!im||a0===lastF)return;lastF=a0;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(im,0,0);
 }
 function launchTick(){
   const r=launch.getBoundingClientRect(),span=r.height-innerHeight;
@@ -429,12 +431,13 @@ function launchTick(){
   buy.classList.toggle('live',d>.6);
   hdr.classList.toggle('light',hdrLight()||mnav.classList.contains('on'));
 }
-let fTarget=20,fCur=20,spinning=false;
-function spin(){
-  fCur+=(fTarget-fCur)*(reduce?1:.2);
-  if(Math.abs(fTarget-fCur)<.02)fCur=fTarget;
-  drawFrame(((Math.round(fCur)%FRAMES)+FRAMES)%FRAMES);
-  if(fCur!==fTarget)requestAnimationFrame(spin);else spinning=false;
+let fTarget=20,fCur=20,spinning=false,spinT=0;
+function spin(now){
+  const dt=spinT?Math.min(.05,(now-spinT)/1000):1/60;spinT=now;
+  fCur+=(fTarget-fCur)*(reduce?1:1-Math.pow(.0015,dt));
+  if(Math.abs(fTarget-fCur)<.01)fCur=fTarget;
+  drawFrame(fCur);
+  if(fCur!==fTarget)requestAnimationFrame(spin);else{spinning=false;spinT=0}
 }
 let tk=false;
 addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(()=>{launchTick();tk=false})}},{passive:true});
