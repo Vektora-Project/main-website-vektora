@@ -68,7 +68,8 @@ h1{font-family:'Grotesk',ui-sans-serif,system-ui,sans-serif;font-weight:600;font
 .try li::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--sky);flex:none;transform:translateY(-1px)}
 .card .end{margin-top:auto;display:flex;flex-direction:column;gap:16px;padding-top:4px}
 .fit{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;border-radius:10px;padding:12px 18px;transition:background .15s,border-color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:600;font-size:15.5px;letter-spacing:.01em;border-radius:8px;padding:16px 32px;transition:transform 80ms ease,background .15s,border-color .15s}
+.btn:active{transform:scale(.98)}
 .btn.primary{background:var(--sky);color:var(--ink)}
 .btn.primary:hover{background:#6bbbe6}
 .btn.ghost{border:1px solid #2b4152;color:var(--text)}
@@ -158,7 +159,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Ganti peran di kanan atas: Admin tidak bisa melihat kas</li>
             <li>Ekspor data pelanggan dan kas ke file Excel</li>
           </ul>
-          <div class="end"><a class="btn primary" href="sistem-kas-pelanggan/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="sistem-kas-pelanggan/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Termasuk impor data awal dan pelatihan pengguna saat pemasangan.</div></div>
         </div>
       </article>
@@ -175,7 +176,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Lihat laporan mingguan per tim dan salin ringkasannya untuk WhatsApp</li>
             <li>Lihat hasil pemetaan proses sebelum sistem dibuat</li>
           </ul>
-          <div class="end"><a class="btn primary" href="dashboard-bisnis-custom/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="dashboard-bisnis-custom/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Tampilan, isian, dan alurnya menyesuaikan usaha Anda.</div></div>
         </div>
       </article>
@@ -192,7 +193,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Catat pembayaran SPP dan buat pengingat WhatsApp untuk yang belum bayar</li>
             <li>Ganti peran ke Pengajar: data tagihan SPP dan honor tidak terlihat</li>
           </ul>
-          <div class="end"><a class="btn primary" href="sistem-bimbel/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="sistem-bimbel/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Mata pelajaran, program, dan besaran SPP mengikuti lembaga Anda.</div></div>
         </div>
       </article>
@@ -216,7 +217,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Ubah jumlah pesanan dan lihat harga per pcs turun</li>
             <li>Kirim daftar penawaran lewat WhatsApp dengan pesan yang sudah tersusun</li>
           </ul>
-          <div class="end"><a class="btn primary" href="company-profile-katalog/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="company-profile-katalog/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Produk dan harga bisa dikelola sendiri lewat halaman admin (opsional).</div></div>
         </div>
       </article>
@@ -231,7 +232,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Pilih ukuran botol, masukkan ke keranjang, lalu checkout lewat WhatsApp</li>
             <li>Booking jadwal coba aroma di atelier</li>
           </ul>
-          <div class="end"><a class="btn primary" href="parfum-lirih/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="parfum-lirih/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Foto produk pada demo adalah ilustrasi. Untuk klien, kami pakai foto produk asli Anda.</div></div>
         </div>
       </article>
@@ -246,7 +247,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Lacak kiriman dengan nomor resi contoh</li>
             <li>Hitung kisaran biaya kirim, lalu kirim permintaan lewat WhatsApp</li>
           </ul>
-          <div class="end"><a class="btn primary" href="company-profile-baharsa/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="company-profile-baharsa/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Lukisan domain publik bisa diganti foto arsip atau aset brand Anda. Ada versi bahasa Inggris.</div></div>
         </div>
       </article>
@@ -261,7 +262,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Pilih sewa bebas, prewedding, mobil pengantin, atau track day, total langsung terhitung</li>
             <li>Coba tanggal yang sudah dipesan dan lihat peringatan bentrok jadwal</li>
           </ul>
-          <div class="end"><a class="btn primary" href="rental-mobil-rodaya/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="rental-mobil-rodaya/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Alur yang sama cocok untuk sewa alat, katering, laundry, atau jasa lain yang menerima order.</div></div>
         </div>
       </article>
@@ -283,7 +284,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Saring karya, lalu klik satu untuk membuka studi kasusnya</li>
             <li>Arahkan kursor ke daftar layanan untuk pratinjau video, lalu isi brief proyek</li>
           </ul>
-          <div class="end"><a class="btn primary" href="studio-riak/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="studio-riak/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Untuk klien, showreel dan video karya diganti dengan potongan karya asli Anda.</div></div>
         </div>
       </article>
@@ -299,13 +300,13 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
         <div class="body">
           <div class="cat">Website Kafe</div>
           <h2>Pebble &amp; Fern Coffee</h2>
-          <p>Website kafe dengan menu HTML (bukan PDF), status buka atau tutup otomatis sesuai jam, dan pemesanan untuk diambil sendiri.</p>
+          <p>Website kafe yang bercerita: saat di-scroll, garis rute menyala mengikuti perjalanan kopi dari kebun di Kolombia sampai ke cangkir, lengkap dengan video asli, menu HTML, dan pesan ambil sendiri.</p>
           <ul class="try">
             <li>Pilih susu untuk kopi lalu tambahkan ke pesanan</li>
             <li>Pilih jam ambil dan kirim pesanan</li>
-            <li>Lihat jam buka hari ini ditandai otomatis</li>
+            <li>Scroll rute kebun ke cangkir dan lihat ketinggiannya berubah</li>
           </ul>
-          <div class="end"><a class="btn primary" href="fnb-cafe/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="fnb-cafe/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Pesanan bisa diteruskan ke tablet kasir, WhatsApp, atau pembayaran online.</div></div>
         </div>
       </article>
@@ -314,13 +315,13 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
         <div class="body">
           <div class="cat">Website Restoran</div>
           <h2>Ember Hollow</h2>
-          <p>Website restoran dengan menu per kategori, reservasi meja yang menampilkan jam yang masih tersedia, dan formulir acara privat.</p>
+          <p>Website restoran yang dibuka dengan scroll masuk ke tungku api, video dapur dari kayu sampai piring, menu bergambar, reservasi meja dengan jam yang masih kosong, dan formulir acara privat.</p>
           <ul class="try">
             <li>Pilih jumlah tamu, tanggal, dan jam yang masih kosong</li>
             <li>Konfirmasi booking lalu simpan ke kalender</li>
-            <li>Kirim permintaan acara privat untuk 20 orang</li>
+            <li>Scroll masuk ke tungku, suhu naik sampai 900°</li>
           </ul>
-          <div class="end"><a class="btn primary" href="fnb-restaurant/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="fnb-restaurant/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Reservasi bisa masuk ke Google Sheet dan email restoran.</div></div>
         </div>
       </article>
@@ -329,13 +330,13 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
         <div class="body">
           <div class="cat">Website Toko Kue</div>
           <h2>Sable &amp; Sugar Bakery</h2>
-          <p>Website toko kue dengan katalog produk, pembuat kue custom yang pratinjau dan harganya berubah langsung, serta pesanan lewat WhatsApp atau email.</p>
+          <p>Website toko kue yang memperkenalkan croissant seperti peluncuran HP: produk berputar saat di-scroll lalu masuk ke panel beli. Ada katalog foto, pembuat kue custom dengan harga langsung, dan pesanan lewat WhatsApp.</p>
           <ul class="try">
-            <li>Saring produk gluten-free dan tambahkan ke pesanan</li>
+            <li>Scroll untuk memutar croissant dan membaca spesifikasinya</li>
             <li>Rancang kue dua tingkat dengan tulisan, lihat harganya</li>
             <li>Kirim pesanan lewat WhatsApp dengan pesan yang sudah tersusun</li>
           </ul>
-          <div class="end"><a class="btn primary" href="fnb-bakery/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="fnb-bakery/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Tanggal ambil menolak hari libur toko secara otomatis.</div></div>
         </div>
       </article>
@@ -350,7 +351,7 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap}
             <li>Scroll ke bagian "4 steps" dan lihat kartunya bertumpuk</li>
             <li>Tambahkan menu ke pesanan lalu pilih jam ambil</li>
           </ul>
-          <div class="end"><a class="btn primary" href="fnb-wobble/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="end"><a class="btn ghost" href="fnb-wobble/">Buka demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="fit">Jam ambil hanya muncul di dalam jam buka kafe.</div></div>
         </div>
       </article>

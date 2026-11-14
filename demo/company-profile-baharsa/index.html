@@ -64,18 +64,26 @@ header.top .wrap{display:flex;align-items:center;gap:26px;height:100%}
 .logo small{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-top:3px}
 .logo svg{width:28px;height:28px;flex:none}
 nav.links{display:flex;gap:24px;font-size:15px;margin-left:auto}
-nav.links a{text-decoration:none;color:var(--ink-2)}
-nav.links a:hover{color:var(--ink)}
+nav.links a{text-decoration:none;color:var(--ink-2);position:relative;padding:6px 0}
+nav.links a:hover,nav.links a.on{color:var(--ink)}
+nav.links a.on::after{content:"";position:absolute;left:50%;bottom:-6px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--signal)}
+.burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;padding:12px;color:var(--ink)}
+.burger i{display:block;height:2px;background:currentColor;margin:5px 0;border-radius:2px}
+.mnav{position:fixed;inset:var(--head) 0 0;z-index:39;background:var(--paper);display:flex;flex-direction:column;gap:4px;padding:30px 24px;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.mnav.on{opacity:1;pointer-events:auto}
+.mnav a{font-family:var(--serif);font-size:38px;text-decoration:none;line-height:1.25}
+.mnav a.btn{font-family:var(--sans);font-size:15.5px;line-height:1.2;align-self:flex-start;margin-top:22px}
 .lang{display:inline-flex;border:1px solid var(--line-2);border-radius:999px;padding:2px;font-size:12.5px;font-weight:500}
 .lang button{border:0;background:none;padding:4px 9px;border-radius:999px;cursor:pointer;color:var(--muted)}
 .lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:11px 20px;font-weight:500;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:16px 32px;font-weight:500;font-size:15.5px;letter-spacing:.01em;line-height:1.2;text-decoration:none;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:transform 80ms ease,background .15s,color .15s,border-color .15s}
+.btn:active{transform:scale(.98)}
 .btn.signal{background:var(--signal);color:#fff}
 .btn.signal:hover{background:#2148E0}
 .btn.dark{background:var(--ink);color:#fff}
 .btn.line{border-color:var(--line-2);background:transparent}
 .btn.line:hover{border-color:var(--ink)}
-.btn.sm{padding:8px 15px;font-size:14px}
+.btn.sm{padding:11px 20px;font-size:15px}
 .btn svg{width:16px;height:16px}
 
 /* ---------- hero: lukisan yang robek ---------- */
@@ -279,6 +287,7 @@ html.still .duo .art{transition:none}
 
 @media (max-width:980px){
   nav.links{display:none}
+  .burger{display:block}
   .under{grid-template-columns:minmax(0,1fr);align-content:center;gap:22px;padding-block:22px}
   .under p{display:none}
   .under .cta{display:none}
@@ -331,11 +340,13 @@ html.still .duo .art{transition:none}
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Baharsa, ke atas"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#141821"/><path d="M6 17.5c2.7 2 5.3 2 8 0s5.3-2 8 0" fill="none" stroke="#F3EEE4" stroke-width="1.6" stroke-linecap="round"/><path d="M14 6v9M10 9.5h8M14 6l-3.5 3.5M14 6l3.5 3.5" fill="none" stroke="#F3EEE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="21" cy="8" r="2.4" fill="#2F5BFF"/></svg><span>Baharsa<small>Lintas Kargo</small></span></a>
-    <nav class="links" aria-label="Menu utama"><a href="#dulu-kini" data-en="How we work">Cara kerja</a><a href="#layanan" data-en="Services">Layanan</a><a href="#lacak" data-en="Track">Lacak</a><a href="#sejarah" data-en="History">Sejarah</a><a href="#kantor" data-en="Offices">Kantor</a></nav>
+    <nav class="links" aria-label="Menu utama"><a href="#layanan" data-sec="layanan" data-en="Services">Layanan</a><a href="#lacak" data-sec="lacak" data-en="Track">Lacak</a><a href="#kantor" data-sec="kantor" data-en="Offices">Kantor</a></nav>
     <div class="lang" role="group" aria-label="Bahasa"><button type="button" data-lang="id" aria-pressed="true">ID</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
     <a class="btn signal sm head-cta" href="#penawaran" data-en="Get a quote">Minta penawaran</a>
+    <button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false"><i></i><i></i></button>
   </div>
 </header>
+<nav class="mnav" id="mnav" aria-label="Menu HP"><a href="#dulu-kini" data-en="How we work">Cara kerja</a><a href="#layanan" data-en="Services">Layanan</a><a href="#lacak" data-en="Track">Lacak</a><a href="#sejarah" data-en="History">Sejarah</a><a href="#kantor" data-en="Offices">Kantor</a><a class="btn signal" href="#penawaran" data-en="Get a quote">Minta penawaran</a></nav>
 
 <main id="top">
   <section class="tear" id="tear" aria-label="Pembuka">
@@ -345,7 +356,7 @@ html.still .duo .art{transition:none}
           <div class="kick"><span class="live" aria-hidden="true"></span><span data-en="Baharsa Track · live">Baharsa Track · langsung</span></div>
           <h2 data-en="Today, every shipment <em>moves on one screen.</em>">Hari ini, setiap kiriman <em>bergerak di satu layar.</em></h2>
           <p data-en="Where your container is, when it lands, which documents are still missing. Our clients see the same screen our operations team sees.">Posisi kontainer, perkiraan tiba, dokumen yang masih kurang. Klien kami melihat layar yang sama dengan tim operasional kami.</p>
-          <div class="cta"><a class="btn signal" href="#lacak" data-en="Try tracking a shipment">Coba lacak kiriman</a></div>
+          <div class="cta"><a class="btn line" href="#lacak" data-en="Try tracking a shipment">Coba lacak kiriman</a></div>
         </div>
         <div class="app" aria-hidden="true">
           <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">track.baharsa.co.id</span><span class="who">PT Sinar Mulya · Logistik</span></div>
@@ -586,6 +597,8 @@ html.still .duo .art{transition:none}
 (()=>{
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 let lang='id';
+{const L=[...document.querySelectorAll('nav.links a')];const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)L.forEach(a=>a.classList.toggle('on',a.dataset.sec===en.target.id))}),{rootMargin:'-45% 0px -50% 0px'});['dulu-kini','layanan','lacak','sejarah','kantor'].forEach(id=>{const e=document.getElementById(id);if(e)io.observe(e)});
+const mn=document.getElementById('mnav'),bg=document.getElementById('burger');bg.onclick=()=>{const on=!mn.classList.contains('on');mn.classList.toggle('on',on);bg.setAttribute('aria-expanded',on)};mn.addEventListener('click',e=>{if(e.target.closest('a')){mn.classList.remove('on');bg.setAttribute('aria-expanded',false)}});document.addEventListener('keydown',e=>{if(e.key==='Escape')mn.classList.remove('on')})}
 const T=(id,en)=>lang==='en'?en:id;
 
 /* ---------- bahasa ---------- */

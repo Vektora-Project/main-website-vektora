@@ -31,8 +31,8 @@
 /* Rental supercar fiktif di Jakarta. Konsep: halaman dibuka di garasi 3D (lampu heksagon di plafon,
    lima supercar di petak bernomor). Klik mobil untuk melihat detail, lalu pesan langsung dari website:
    pilih cara sewa atau paket, tanggal (cek jadwal unit), tambahan, lalu kirim pesanan ke WhatsApp.
-   Mobil 3D: "Collect Cars" oleh drcollect (github.com/drcollect/collect-cars), lisensi CC BY 4.0.
-   Desain konsep, bukan merek asli. */
+   Mobil: lima model Sketchfab berlisensi CC BY 4.0 (daftar di sumber/rodaya/credits.txt), dirender di Blender
+   (studio, putaran 360° 48 frame) dan versi ringan GLB untuk garasi. Logo, emblem, dan pelat asli dihapus. */
 :root{
   --bg:#0E1013; --bg-2:#15181D; --bg-3:#1D2128; --line:#2A2F38; --line-2:#3A404B;
   --ink:#F3F4F6; --ink-2:#C3C8D1; --muted:#8B929E;
@@ -57,8 +57,9 @@ img,svg{display:block}
 .demo-bar a{color:#fff}
 
 /* ---------- tombol ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid transparent;padding:11px 20px;font-weight:700;font-size:14.5px;text-decoration:none;line-height:1.1;white-space:nowrap;transition:transform .15s,background .15s}
-.btn:active{transform:scale(.97)}
+/* tombol: satu radius (pil) untuk seluruh halaman, padding 16/32, label 15px/600 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid transparent;padding:16px 32px;font-weight:600;font-size:15px;letter-spacing:.01em;text-decoration:none;line-height:1.1;white-space:nowrap;transition:transform 80ms ease-out,background .15s}
+.btn:active{transform:scale(.98)}
 .btn.acc{background:var(--acc);color:var(--acc-ink)}
 .btn.acc:hover{background:var(--acc-2)}
 .btn.light{background:#fff;color:#111}
@@ -75,6 +76,11 @@ img,svg{display:block}
 .hero.cfg::before{right:420px}
 .stage canvas{display:block;width:100%;height:100%;touch-action:pan-y;outline:none}
 .stage.grab canvas{cursor:grab}
+/* foto render studio yang bisa diputar 360° (mode fokus dan pesan) */
+.tt{position:absolute;inset:0;z-index:2;background:#050506;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
+.tt canvas{position:absolute;inset:0;cursor:grab;touch-action:pan-y}
+.tt.drag canvas{cursor:grabbing}
+.hero.tt-on .tt{opacity:1;visibility:visible;transition:opacity .45s ease}
 .top{position:absolute;inset:18px 24px auto;display:flex;align-items:center;gap:28px;z-index:6}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1}
 .logo svg{width:30px;height:30px}
@@ -83,6 +89,16 @@ nav.links{display:flex;gap:22px;font-size:14.5px;font-weight:500}
 nav.links a{text-decoration:none;color:var(--ink-2);padding:4px 0;border-bottom:2px solid transparent}
 nav.links a:hover,nav.links a.on{color:#fff;border-color:var(--acc)}
 .top .btn{margin-left:auto}
+/* satu tombol terisi per layar: saat kartu mobil terbuka, tombol header jadi garis */
+.hero.focus .top .btn.acc,.hero.cfg .top .btn.acc{background:transparent;border-color:rgba(255,255,255,.35);color:#fff}
+.menu-btn{display:none;margin-left:auto;background:none;border:0;color:#fff;font:inherit;font-size:15px;font-weight:500;padding:8px 4px}
+.menu-btn+.btn{margin-left:0}
+.mnav{position:absolute;top:64px;left:16px;right:16px;z-index:7;background:rgba(12,13,17,.94);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:8px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity 200ms ease-out,visibility 0s 200ms;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.mnav.open{opacity:1;visibility:visible;transition:opacity 200ms ease-out}
+.mnav a{color:#fff;text-decoration:none;font-size:16px;font-weight:500;padding:14px 12px;border-radius:10px}
+.mnav a.on{color:var(--acc)}
+.mnav a:hover{background:rgba(255,255,255,.06)}
+footer nav{display:flex;gap:18px}
 
 .copy{position:absolute;left:24px;bottom:34px;z-index:5;max-width:760px;transition:opacity .35s,transform .35s}
 .copy .kicker{font-family:var(--mono);font-size:12px;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px}
@@ -194,7 +210,7 @@ h2.big{font-size:clamp(32px,4.4vw,52px);line-height:1;letter-spacing:-.03em;marg
 .filters button.on{background:#111;color:#fff;border-color:#111}
 .fleet{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .unit{background:#fff;border:1px solid var(--pline);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
-.unit .pic{aspect-ratio:16/10;background:radial-gradient(ellipse at 50% 70%,#2A2E36,#121418 70%);position:relative}
+.unit .pic{aspect-ratio:16/10;background:#050506;position:relative;overflow:hidden}
 .unit .pic img{width:100%;height:100%;object-fit:cover}
 .unit .pic .n{position:absolute;left:12px;top:10px;font-family:var(--mono);font-size:12px;color:var(--acc)}
 .unit .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -256,6 +272,7 @@ footer a{color:#fff}
 /* ---------- HP ---------- */
 @media (max-width:980px){
   nav.links{display:none}
+  .menu-btn{display:block}
   .hero.cfg{grid-template-columns:1fr;grid-template-rows:min(58svh,520px) auto;height:auto;max-height:none}
   .hero.cfg .panel{border-left:0;overflow:visible}
   .back{top:76px}
@@ -266,7 +283,7 @@ footer a{color:#fff}
 @media (max-width:600px){
   .wrap{padding-inline:16px}
   .top{inset:14px 16px auto;gap:12px}
-  .top .btn{padding:9px 14px;font-size:13.5px}
+  .top .btn{padding:12px 20px}
   .logo{font-size:19px}
   .logo small{display:none}
   .copy{left:16px;right:16px;bottom:96px}
@@ -290,10 +307,11 @@ footer a{color:#fff}
 .credit{flex-basis:100%;font-size:12px;color:#5E646D}
 </style>
 
-<div class="demo-bar"><b>Demo · data contoh.</b> Rodaya Supercar adalah usaha fiktif. Mobilnya desain konsep 3D (bukan merek asli). Prototipe website oleh <a href="https://vektoraproject.com">Vektora Project</a>.</div>
+<div class="demo-bar"><b>Demo · data contoh.</b> Rodaya Supercar adalah usaha fiktif. Mobil di sini model 3D berlisensi, tanpa logo merek. Prototipe website oleh <a href="https://vektoraproject.com">Vektora Project</a>.</div>
 
 <section class="hero" id="hero" aria-label="Garasi 3D Rodaya Supercar">
   <div class="stage grab" id="stage">
+    <div class="tt" id="tt" aria-hidden="true"><canvas id="ttCv"></canvas></div>
     <div class="nogl" id="nogl"><div>Tampilan garasi 3D tidak bisa dimuat di browser ini.<br>Daftar armada dan pemesanan di bawah tetap bisa dipakai.</div></div>
   </div>
   <div class="loading" id="loading">Menyiapkan garasi…</div>
@@ -304,10 +322,12 @@ footer a{color:#fff}
       <span>Rodaya<small>Supercar Rental · Jakarta</small></span>
     </a>
     <nav class="links" aria-label="Menu">
-      <a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a><a href="#faq">Tanya jawab</a><a href="#kontak">Kontak</a>
+      <a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a>
     </nav>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mnav">Menu</button>
     <button class="btn acc" type="button" data-order="cur">Pesan mobil</button>
   </header>
+  <nav class="mnav" id="mnav" aria-label="Menu"><a href="#hero" class="on">Garasi</a><a href="#armada">Armada</a><a href="#cara">Cara pesan</a></nav>
 
   <div class="copy" id="copy">
     <p class="kicker">Rodaya Supercar · Jakarta</p>
@@ -324,7 +344,7 @@ footer a{color:#fff}
 
   <article class="card" id="card" aria-live="polite">
     <div class="row1"><span class="no" id="cNo">01 / 05</span><span class="avail" id="cAvail">Tersedia hari ini</span></div>
-    <h2 id="cName">Vanta</h2>
+    <h2 id="cName">Kapur</h2>
     <p class="type" id="cType"></p>
     <p class="desc" id="cDesc"></p>
     <div class="stats" id="cStats"></div>
@@ -337,7 +357,7 @@ footer a{color:#fff}
   <button class="btn dark back" type="button" id="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Kembali ke garasi</button>
   <button class="hotspot" type="button" id="hotspot" aria-label="Ganti warna unit"><i id="hsDot"></i><span id="hsName">Grafit</span> <small>klik untuk ganti warna</small></button>
   <div class="views" id="views" role="group" aria-label="Sudut pandang">
-    <button type="button" data-v="q" class="on">3/4</button><button type="button" data-v="f">Depan</button><button type="button" data-v="s">Samping</button><button type="button" data-v="r">Belakang</button><button type="button" data-v="t">Atas</button>
+    <button type="button" data-v="q" class="on">3/4</button><button type="button" data-v="f">Depan</button><button type="button" data-v="s">Samping</button><button type="button" data-v="r">Belakang</button>
   </div>
   <div class="drag-hint">Geser untuk memutar mobil</div>
 
@@ -450,7 +470,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil: <a href="https://github.com/drcollect/collect-cars">Collect Cars</a> oleh drcollect, lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Warna cat diubah untuk demo ini.</span></div></footer>
+<footer><div class="wrap"><span>© Rodaya Supercar (fiktif) · data contoh</span><nav aria-label="Lainnya"><a href="#faq">Tanya jawab</a><a href="#kontak">Kontak</a></nav><span>Butuh website yang bisa menerima order seperti ini? <a href="https://vektoraproject.com">vektoraproject.com</a></span><span class="credit">Model 3D mobil dari Sketchfab oleh <a href="https://sketchfab.com/3d-models/porsche-gt3-rs-e738eae819c34d19a31dd066c45e0f3d">Black Snow</a> (01, <a href="https://sketchfab.com/3d-models/mersedes-benz-g63-amg-e5e2a1d2238048a1a494b3df983c16bb">04</a>), <a href="https://sketchfab.com/3d-models/lamborghini-centenario-roadster-sdc-938d3e3642cf4ea895c62c2a4bf6fc08">SDC PERFORMANCE</a> (02), <a href="https://sketchfab.com/3d-models/bmw-m4csl-b53782a00cc240a191d5d7d005af1423">Mpgs.studio3DModels</a> (03), dan <a href="https://sketchfab.com/3d-models/chevrolet-corvette-c7-2b509d1bce104224b147c81757f6f43a">Martin Trafas</a> (05), lisensi <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Logo, emblem, dan pelat dihapus, lalu dirender ulang untuk demo ini.</span></div></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="sheet" id="sheet"></div>
@@ -469,21 +489,21 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MODEL_DIR='../models/', DRACO_DIR='../vendor/draco/';
 
 /* ---------------- data armada (fiktif) ----------------
-   sopir = dengan driver per 6 jam, lepas = lepas kunci per 24 jam. Mobil 3D: desain konsep Collect Cars (CC BY 4.0). */
+   sopir = dengan driver per 6 jam, lepas = lepas kunci per 24 jam. Foto putar: site/media/rodaya/<slug>/t_000..047.webp, GLB: site/models/<slug>.glb. */
 const CARS=[
- {id:'vanta',model:'hypercar',nick:'Vanta',type:'Hypercar listrik · 2 kursi',desc:'Kanopi kaca gelap, sayap belakang melayang, dan roda dengan cincin cahaya. Bintang utama garasi kami.',cat:['harian','foto','track'],kw:1100,acc:'2,1',top:350,drive:'AWD listrik',year:2026,sopir:18e6,lepas:45e6,
-  colors:[['Oranye senja','#D9561F'],['Grafit satin','#2E3136'],['Putih kutub','#E6E8EA']],booked:[2,3,9]},
- {id:'sudut',model:'wedge',nick:'Sudut',type:'Supercar wedge gaya 80-an · 2 kursi',desc:'Bentuk baji tajam dengan lampu pop-up dan kisi-kisi belakang. Favorit untuk foto prewedding bertema retro.',cat:['harian','foto','acara'],kw:485,acc:'3,4',top:315,drive:'V12, RWD',year:2025,sopir:9.5e6,lepas:24e6,
-  colors:[['Merah','#B21C24'],['Kuning','#E2A80C'],['Putih','#ECEBE6']],booked:[0,6,7]},
- {id:'badai',model:'rally',nick:'Badai',type:'Supercar rally-raid 4x4 · 2 kursi',desc:'Kolong tinggi, suspensi panjang, dan lampu sorot di atap. Supercar yang tidak takut jalan berpasir.',cat:['harian','foto'],kw:420,acc:'3,9',top:250,drive:'Twin-turbo, 4x4',year:2025,sopir:8.5e6,lepas:22e6,
-  colors:[['Pasir','#B8955E'],['Grafit','#2E3136'],['Hijau zaitun','#4A5E36']],booked:[4,5,12]},
- {id:'arka',model:'endurance',nick:'Arka',type:'Endurance racer versi jalan raya · 2 kursi',desc:'Sirip punggung dan bilah lampu seperti mobil balap 24 jam. Pilihan utama untuk track day.',cat:['track','foto'],kw:710,acc:'2,6',top:340,drive:'Hybrid V8, RWD',year:2026,sopir:15e6,lepas:38e6,
-  colors:[['Biru balap','#1F3FA6'],['Grafit','#2E3136'],['Putih','#E9EAEC']],booked:[1,8,10]},
- {id:'layang',model:'streamliner',nick:'Layang',type:'Grand tourer streamliner · 2 kursi',desc:'Bodi panjang dan mulus dengan garis cahaya tipis. Datang ke akad dengan elegan, tanpa terlihat berlebihan.',cat:['acara','foto','harian'],kw:520,acc:'2,9',top:320,drive:'Listrik, AWD',year:2026,sopir:12e6,lepas:30e6,
-  colors:[['Perak','#C3C6C9'],['Grafit cair','#44474C'],['Champagne','#C2AC86']],booked:[2,9,11]},
+ {id:'kapur',slug:'gt-putih',nick:'Kapur',type:'GT coupe untuk sirkuit · 2 kursi',desc:'Sayap belakang besar, kap serat karbon, dan mesin enam silinder 4.0 liter yang berputar sampai 9.000 rpm. Paling sering dipesan untuk track day.',cat:['track','foto','harian'],kw:386,acc:'3,2',top:296,drive:'Flat-6 4.0 L, RWD',year:2024,sopir:9e6,lepas:24e6,
+  colors:[['Putih kapur','#E9E9E6']],booked:[2,3,9]},
+ {id:'gerhana',slug:'roadster-karbon',glow:.24,nick:'Gerhana',type:'Roadster V12 edisi terbatas · 2 kursi',desc:'Atap terbuka, bodi serat karbon tanpa cat, dan V12 tepat di belakang kursi. Untuk datang ke venue saat semua orang menoleh.',cat:['acara','foto'],kw:566,acc:'2,9',top:350,drive:'V12 6.5 L, AWD',year:2023,sopir:18e6,lepas:45e6,
+  colors:[['Karbon ungu gelap','#2B2533']],booked:[0,6,7]},
+ {id:'baja',slug:'coupe-abu',glow:.16,nick:'Baja',type:'Sport coupe versi ringan · 2 kursi',desc:'Coupe enam silinder yang dibuat 100 kg lebih ringan, dengan aksen merah dan kursi bucket karbon. Enak dipakai harian, galak di sirkuit.',cat:['harian','track'],kw:405,acc:'3,7',top:307,drive:'Inline-6 twin-turbo, RWD',year:2023,sopir:6.5e6,lepas:16e6,
+  colors:[['Abu baja','#6E7378']],booked:[4,5,12]},
+ {id:'banteng',slug:'suv-merah',nick:'Banteng',type:'SUV off-road V8 · 5 kursi',desc:'Kotak, tinggi, dan merah menyala. Muat lima orang plus gaun pengantin, dan tetap tenang di jalan berlubang.',cat:['acara','harian','foto'],kw:430,acc:'4,5',top:220,drive:'V8 twin-turbo, 4x4',year:2024,sopir:5.5e6,lepas:14e6,
+  colors:[['Merah','#9E1B1F']],booked:[1,8,10]},
+ {id:'samudra',slug:'coupe-biru',nick:'Samudra',type:'Coupe V8 mesin depan · 2 kursi',desc:'Garis tajam, atap targa yang bisa dilepas, dan V8 besar di depan. Supercar paling santai untuk diajak keliling kota.',cat:['harian','foto'],kw:339,acc:'3,9',top:290,drive:'V8 6.2 L, RWD',year:2019,sopir:4.5e6,lepas:11e6,
+  colors:[['Biru laut','#2B6F8F']],booked:[2,9,11]},
 ];
-const N=CARS.length, GAP=3.6;
-CARS.forEach((c,i)=>{c.i=i;c.no=String(i+1).padStart(2,'0');c.color=0});
+const N=CARS.length, GAP=4.1;
+CARS.forEach((c,i)=>{c.i=i;c.no=String(i+1).padStart(2,'0');c.color=0;c.model=c.slug});
 const PKG={
  bebas:{name:'Sewa bebas',note:''},
  foto:{name:'Prewedding 3 jam',note:'3 jam dengan driver yang menjaga mobil selama sesi foto. Lokasi dalam Jakarta.',f:c=>c.sopir*.75},
@@ -526,7 +546,9 @@ function init3D(){
  renderer.domElement.tabIndex=0;
  const scene=new THREE.Scene();
  scene.background=new THREE.Color(0x0b0c0f);
- scene.fog=new THREE.Fog(0x0b0c0f,16,42);
+ // r128 membaca warna hex sebagai linear; ubah dulu dari sRGB supaya gelapnya tidak pudar jadi abu-abu.
+ const lin=h=>new THREE.Color(h).convertSRGBToLinear();
+ scene.fog=new THREE.Fog(lin(0x0b0c0f),16,42);
  const camera=new THREE.PerspectiveCamera(36,1,.1,120);
  let dirty=true;
 
@@ -548,7 +570,9 @@ function init3D(){
  const key=new THREE.DirectionalLight(0xffffff,1.4);key.position.set(4,10,6);scene.add(key);
 
  // Lantai, garis petak, nomor petak
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:0x08090b,roughness:.36,metalness:.3,envMapIntensity:.5}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+ // Lantai epoksi mengilap: semi-transparan di atas salinan garasi yang dicerminkan (pantulan murah tanpa render kedua).
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(120,60),new THREE.MeshStandardMaterial({color:lin(0x0c0d10),roughness:.22,metalness:.15,envMapIntensity:.45,transparent:true,opacity:.86}));floor.rotation.x=-Math.PI/2;floor.renderOrder=1;scene.add(floor);
+ const mirror=new THREE.Group();mirror.matrixAutoUpdate=false;mirror.matrix.makeScale(1,-1,1);scene.add(mirror);
  const lineMat=new THREE.MeshBasicMaterial({color:0xd9dce0});
  const lineG=new THREE.PlaneGeometry(1,1);
  const addLine=(x,z,w,d)=>{const m=new THREE.Mesh(lineG,lineMat);m.rotation.x=-Math.PI/2;m.scale.set(w,d,1);m.position.set(x,.004,z);scene.add(m)};
@@ -560,23 +584,27 @@ function init3D(){
  const canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g);const tx=new THREE.CanvasTexture(c);tx.encoding=THREE.sRGBEncoding;tx.anisotropy=4;redraw.push(()=>{g.clearRect(0,0,w,h);draw(g);tx.needsUpdate=true});return tx};
  const numTex=t=>canvasTex(256,128,g=>{g.fillStyle='#d9dce0';g.font='800 96px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,68)});
  document.fonts&&document.fonts.load('800 96px Archivo').then(()=>redraw.forEach(f=>f()));
- const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshBasicMaterial({color:0x17191d}));wall.position.set(0,7,-5.2);scene.add(wall);
+ const wall=new THREE.Mesh(new THREE.PlaneGeometry(120,14),new THREE.MeshStandardMaterial({color:lin(0x1a1c21),roughness:.9}));wall.position.set(0,7,-5.2);scene.add(wall);mirror.add(wall.clone());
+ // lampu strip tegak di dinding, satu di tiap garis petak
+ {const stripM=new THREE.MeshBasicMaterial();stripM.color.setScalar(2.2);const stripG=new THREE.PlaneGeometry(.06,4.6);
+  for(let i=0;i<=N;i++){const st=new THREE.Mesh(stripG,stripM);st.position.set(x0-GAP/2+i*GAP,2.3,-5.18);scene.add(st);mirror.add(st.clone())}}
  {const tx=canvasTex(2048,400,g=>{g.fillStyle='#e8e8e4';g.font='800 300px Archivo, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('rodaya',1024,190);g.fillStyle='#FFB21E';g.fillRect(560,350,928,18)});
-  const sign=new THREE.Mesh(new THREE.PlaneGeometry(12.2,2.4),new THREE.MeshBasicMaterial({map:tx,transparent:true,opacity:.92}));sign.position.set(0,2.75,-5.15);scene.add(sign);}
+  const sign=new THREE.Mesh(new THREE.PlaneGeometry(12.2,2.4),new THREE.MeshBasicMaterial({map:tx,transparent:true,opacity:.92}));sign.position.set(0,2.75,-5.15);scene.add(sign);mirror.add(sign.clone());}
  // Plafon heksagon bercahaya
  const hexMat=new THREE.MeshBasicMaterial({color:0xf2f4f7,side:THREE.DoubleSide,fog:true});
  const hexG=new THREE.RingGeometry(.86,.94,6,1);hexG.rotateX(Math.PI/2);hexG.rotateY(Math.PI/6);
  const hw=Math.sqrt(3)*.94;
  const hexes=new THREE.InstancedMesh(hexG,hexMat,26*7);let k=0;const mtx=new THREE.Matrix4();
  for(let r=0;r<7;r++)for(let q=0;q<26;q++){mtx.makeTranslation((q-12.5)*hw+(r%2?hw/2:0),5.2,-4.4+r*1.42);hexes.setMatrixAt(k++,mtx)}
- hexes.count=k;scene.add(hexes);
+ hexes.count=k;scene.add(hexes);mirror.add(hexes.clone());
  const blobTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');const gr=g.createRadialGradient(64,64,6,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.85)');gr.addColorStop(.6,'rgba(0,0,0,.45)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)})();
 
  // ---------- muat model mobil (glTF + Draco) ----------
  const ROW_YAW=.62; // model menghadap +Z; diputar sedikit supaya terlihat 3/4 dari kamera
  const loader=new THREE.GLTFLoader();const draco=new THREE.DRACOLoader();draco.setDecoderPath(DRACO_DIR);loader.setDRACOLoader(draco);
  const holders=CARS.map((c,i)=>{const h=new THREE.Group();h.position.set(x0+i*GAP,0,0);h.rotation.y=ROW_YAW;h.userData.i=i;scene.add(h);c.obj=h;c.h=1.25;
-  const n=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.55),new THREE.MeshBasicMaterial({map:numTex(c.no),transparent:true,depthWrite:false}));n.rotation.x=-Math.PI/2;n.position.set(x0+i*GAP,.006,3.4);scene.add(n);return h});
+  const n=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.55),new THREE.MeshBasicMaterial({map:numTex(c.no),transparent:true,depthWrite:false}));n.rotation.x=-Math.PI/2;n.position.set(x0+i*GAP,.006,3.4);n.renderOrder=2;scene.add(n);
+  c.mobj=new THREE.Group();c.mobj.position.copy(h.position);c.mobj.rotation.y=ROW_YAW;mirror.add(c.mobj);return h});
  let loaded=0;const loadEl=$('#loading');loadEl.textContent='Memuat mobil 0/'+N;
  const ready=CARS.map(c=>new Promise(res=>{
   loader.load(MODEL_DIR+c.model+'.glb',gltf=>{
@@ -584,16 +612,17 @@ function init3D(){
    m.traverse(o=>{if(!o.isMesh)return;const mt=o.material;if(mt&&/paint|graphite/i.test(mt.name))c.paints.push(mt)});
    c.paints=[...new Set(c.paints)];
    const box=new THREE.Box3().setFromObject(m);c.h=box.max.y;c.len=box.max.z-box.min.z;c.wid=box.max.x-box.min.x;
-   const sh=new THREE.Mesh(new THREE.PlaneGeometry(c.wid*1.6,c.len*1.25),new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=.006;m.add(sh);
+   c.mobj.add(m.clone());
+   const sh=new THREE.Mesh(new THREE.PlaneGeometry(c.wid*1.6,c.len*1.25),new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=.006;sh.renderOrder=2;m.add(sh);
    c.gltf=m;c.obj.add(m);paint(c);
    c.obj.scale.setScalar(.001);c.obj.userData.grow=true;
    loadEl.textContent='Memuat mobil '+(++loaded)+'/'+N;if(loaded===N)loadEl.classList.add('done');res(c);
   },undefined,e=>{console.warn('Gagal memuat',c.model,e);if(++loaded===N)loadEl.classList.add('done');res(c)});
  }));
- function paint(c){dirty=true;(c.paints||[]).forEach(m=>{m.color.set(c.colors[c.color][1]).convertSRGBToLinear()})}
+ function paint(c){dirty=true;if(c.colors.length<2)return;(c.paints||[]).forEach(m=>{m.color.set(c.colors[c.color][1]).convertSRGBToLinear()})}
 
  // cincin putar untuk mode pesan
- const ring=new THREE.Mesh(new THREE.RingGeometry(3.05,3.12,96),new THREE.MeshBasicMaterial({color:0xFFB21E,transparent:true,opacity:0}));ring.rotation.x=-Math.PI/2;ring.position.y=.008;scene.add(ring);
+ const ring=new THREE.Mesh(new THREE.RingGeometry(3.05,3.12,96),new THREE.MeshBasicMaterial({color:0xFFB21E,transparent:true,opacity:0}));ring.rotation.x=-Math.PI/2;ring.position.y=.008;ring.renderOrder=2;scene.add(ring);
 
  // ---------- kamera ----------
  const cam={pos:new THREE.Vector3(),tgt:new THREE.Vector3()};
@@ -603,7 +632,7 @@ function init3D(){
  function aspect(){const r=renderer.domElement.getBoundingClientRect();return r.width/Math.max(1,r.height)}
  function goal(){
   const i=S.idx, X=x0+i*GAP, a=aspect();
-  if(S.mode==='row'){const d=a<1?21:16;const span=a<1?.6:Math.min(1.6,(N-1)/2);const XC=Math.max(x0+span*GAP,Math.min(-x0-span*GAP,X));want.tgt.set(XC,a<1?-1.3:-.8,0);want.pos.set(XC,4.2,d)}
+  if(S.mode==='row'){const d=a<1?22:17.5;const span=a<1?.6:Math.min(1.6,(N-1)/2);const XC=Math.max(x0+span*GAP,Math.min(-x0-span*GAP,X));want.tgt.set(XC,a<1?-1.3:-.8,0);want.pos.set(XC,4.2,d)}
   else if(S.mode==='focus'){const d=a<1?11.5:8.6, off=a<1?0:-2.1;want.tgt.set(X+off,a<1?-.3:.45,0);want.pos.set(X+off+2.6,2.3,d)}
   else{const d=(a<1?11:orbit.dist);want.tgt.set(X,.62,0);
    want.pos.set(X+Math.sin(orbit.az)*Math.cos(orbit.el)*d,.62+Math.sin(orbit.el)*d,Math.cos(orbit.az)*Math.cos(orbit.el)*d)}
@@ -636,13 +665,13 @@ function init3D(){
  }
 
  // ---------- render ----------
- let visible=true;dirty=true;new IntersectionObserver(es=>{visible=es[0].isIntersecting;dirty=true}).observe(hero);
+ let visible=true,paused=false;dirty=true;new IntersectionObserver(es=>{visible=es[0].isIntersecting;dirty=true}).observe(hero);
  const hsPos=new THREE.Vector3();
  let last=performance.now();
  function frame(now){
   requestAnimationFrame(frame);
   const dt=Math.min(.05,(now-last)/1000);last=now;
-  if(!visible)return;
+  if(!visible||paused)return;
   const k=reduce?1:1-Math.pow(.0015,dt);
   // Gambar ulang hanya saat ada yang bergerak, supaya hemat baterai HP.
   let moving=dirty||cam.pos.distanceToSquared(want.pos)>1e-6||cam.tgt.distanceToSquared(want.tgt)>1e-6||Math.abs(ring.material.opacity-(S.mode==='cfg'?.55:0))>.003;
@@ -653,7 +682,8 @@ function init3D(){
   CARS.forEach((c,i)=>{const o=c.obj;const sel=i===S.idx;
    const y=S.mode==='cfg'&&sel?0:ROW_YAW;o.rotation.y+=(y-o.rotation.y)*k;
    o.visible=S.mode!=='cfg'||sel;
-   if(o.userData.grow){const s=o.scale.x+(1-o.scale.x)*(reduce?1:Math.min(1,k*1.4));o.scale.setScalar(s);if(s>.999){o.scale.setScalar(1);o.userData.grow=false}}});
+   if(o.userData.grow){const s=o.scale.x+(1-o.scale.x)*(reduce?1:Math.min(1,k*1.4));o.scale.setScalar(s);if(s>.999){o.scale.setScalar(1);o.userData.grow=false}}
+   c.mobj.rotation.y=o.rotation.y;c.mobj.scale.copy(o.scale);c.mobj.visible=o.visible});
   ring.position.x=x0+S.idx*GAP;ring.material.opacity+=((S.mode==='cfg'?.55:0)-ring.material.opacity)*k;
   renderer.render(scene,camera);
   if(S.mode==='cfg'){hsPos.set(0,car().h+.08,0);car().obj.localToWorld(hsPos);hsPos.project(camera);
@@ -673,8 +703,76 @@ function init3D(){
    rt.setClearColor(0x000000,0);rt.render(sc,cm);const url=rt.domElement.toDataURL('image/png');sc.remove(o);return url});
   rt.dispose();rt.forceContextLoss&&rt.forceContextLoss();return out;
  }
- return {goal,thumbs,orbit,VIEWS,ready:Promise.all(ready),setColor(){paint(car())}};
+ return {goal,thumbs,orbit,VIEWS,ready:Promise.all(ready),setColor(){paint(car())},pause(v){paused=v;dirty=true}};
 }
+
+/* ---------------- foto studio 360° ----------------
+   Tiap mobil punya 48 foto render (7,5° per frame). Dipakai saat mobil dipilih: bisa digeser untuk memutar,
+   antar-frame dibaurkan supaya putarannya halus. Garasi 3D di belakangnya dijeda supaya hemat baterai. */
+const TT=(()=>{
+ const F=48, wrap=$('#tt'), cv=$('#ttCv'), g=cv.getContext('2d');
+ const VIEW={q:0,f:6,s:18,r:30};
+ let c=null,on=false,pos=0,want=0,drag=null,idleAt=0,raf=0,W=1,H=1,dpr=1,last=0;
+ const url=(k,i)=>`../media/rodaya/${k.slug}/t_${String(i).padStart(3,'0')}.webp`;
+ function load(k){
+  if(k.fr)return;k.fr=[];
+  k.poster=new Image();k.poster.onload=()=>{k.posterOk=1;if(k===c)kick()};k.poster.onerror=()=>{k.noTT=1;if(k===c)show(on)};k.poster.src=`../media/rodaya/${k.slug}.jpg`;
+  for(let i=0;i<F;i++){const im=new Image();im.decoding='async';im.onload=()=>{im.ok=1;if(k===c)kick()};im.src=url(k,i);k.fr[i]=im}
+ }
+ const at=i=>{const im=c.fr[((i%F)+F)%F];return im&&im.ok?im:null};
+ function near(i){for(let d=1;d<F/2;d++){const a=at(i+d)||at(i-d);if(a)return a}return c.posterOk?c.poster:null}
+ function size(){const r=wrap.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=Math.max(1,Math.round(r.width*dpr));H=Math.max(1,Math.round(r.height*dpr));if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}kick()}
+ function draw(){
+  g.globalAlpha=1;g.fillStyle='#050506';g.fillRect(0,0,W,H);if(!c)return;
+  // Foto render 16:9 berlatar studio gelap. Ukurannya dihitung supaya mobil utuh, lalu tepi foto
+  // yang jatuh di dalam layar dibaurkan ke warna latar.
+  const wide=W/H>1.15, desk=W/dpr>980, focus=hero.classList.contains('focus');
+  let sc,cx,cy;
+  // Di foto, mobil (tampak samping) memakai hampir 90% lebar bingkai; ukurannya dijaga supaya mobil tidak terpotong.
+  if(wide){if(focus&&desk){sc=Math.min(W*.68/1280,H/720*.95);cx=W*.655}else{sc=Math.min(W/1280,H/720*.98);cx=W/2}cy=H*.5}
+  else{sc=W/1280*1.02;cx=W/2;cy=H*.46;
+   if(focus){const top=(wrap.getBoundingClientRect().top),ct=$('#card').getBoundingClientRect().top-top;cy=Math.max(90,(100+ct)/2)*dpr}}
+  const dw=1280*sc,dh=720*sc,x=cx-dw/2,y=cy-dh/2,i0=Math.floor(pos),f=pos-i0;
+  const a=at(i0)||near(i0);if(a)g.drawImage(a,x,y,dw,dh);
+  const b=at(i0+1);if(a&&b&&f>.01){g.globalAlpha=f;g.drawImage(b,x,y,dw,dh);g.globalAlpha=1}
+  // cahaya lembut di belakang mobil; mobil gelap (karbon) diberi sedikit lebih banyak supaya siluetnya terbaca
+  {const r=g.createRadialGradient(cx,y+dh*.42,0,cx,y+dh*.42,dw*.42),v=c.glow||.10;r.addColorStop(0,`rgba(150,156,172,${v})`);r.addColorStop(1,'rgba(150,156,172,0)');
+   g.globalCompositeOperation='screen';g.fillStyle=r;g.fillRect(x,y,dw,dh);g.globalCompositeOperation='source-over'}
+  const fe=(x0,y0,x1,y1,rx,ry,rw,rh)=>{const gr=g.createLinearGradient(x0,y0,x1,y1);gr.addColorStop(0,'rgba(5,5,6,0)');gr.addColorStop(1,'#050506');g.fillStyle=gr;g.fillRect(rx,ry,rw,rh)};
+  g.fillStyle='#050506';
+  if(x>0){g.fillRect(0,0,x+1,H);fe(x+dw*.14,0,x,0,x,0,dw*.14,H)}
+  if(x+dw<W){g.fillStyle='#050506';g.fillRect(x+dw-1,0,W,H);fe(x+dw*.86,0,x+dw,0,x+dw*.86,0,dw*.14+1,H)}
+  if(y+dh<H){g.fillStyle='#050506';g.fillRect(0,y+dh-1,W,H);fe(0,y+dh*.78,0,y+dh,0,y+dh*.78,W,dh*.22+1)}
+  if(y>0){g.fillStyle='#050506';g.fillRect(0,0,W,y+1)}
+ }
+ function kick(){if(!raf&&on){last=performance.now();raf=requestAnimationFrame(tick)}}
+ function tick(now){
+  raf=0;if(!on)return;const dt=Math.min(.05,(now-last)/1000);last=now;
+  const spin=!reduce&&!drag&&S.mode==='focus'&&now>idleAt;
+  if(spin)want+=dt*2.4;
+  const k=reduce?1:1-Math.pow(.0008,dt);pos+=(want-pos)*k;
+  draw();
+  if(spin||drag||Math.abs(want-pos)>.002||!c.fr.every(im=>im.ok))raf=requestAnimationFrame(tick);
+ }
+ cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,w:want,moved:false};wrap.classList.add('drag');if(e.pointerType==='mouse')cv.setPointerCapture(e.pointerId);kick()});
+ cv.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;if(Math.abs(dx)>5)drag.moved=true;
+  if(drag.moved){want=drag.w-dx/(W/dpr)*F*.9;$$('#views button').forEach(b=>b.classList.toggle('on',false))}});
+ const end=()=>{if(!drag)return;const d=drag;drag=null;wrap.classList.toggle('drag',false);idleAt=performance.now()+2500;
+  if(!d.moved&&S.mode==='focus')setMode('cfg');kick()};
+ cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+ cv.tabIndex=0;cv.setAttribute('role','img');
+ cv.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){want+=3;kick()}if(e.key==='ArrowLeft'){want-=3;kick()}});
+ new ResizeObserver(size).observe(wrap);
+ function show(v){
+  on=v&&!!c&&!c.noTT;hero.classList.toggle('tt-on',on);if(G)G.pause(on);
+  if(on){cv.setAttribute('aria-label',`Foto studio ${c.nick}, geser untuk memutar 360 derajat`);size();kick()}
+ }
+ return{
+  set(k,v){load(k);c=k;show(v);const n=CARS[(k.i+1)%N];setTimeout(()=>load(n),1200)},
+  view(v){if(!(v in VIEW))return;const t=VIEW[v];const cur=((Math.round(want)%F)+F)%F;let d=t-cur;if(d>F/2)d-=F;if(d<-F/2)d+=F;want=Math.round(want)+d;idleAt=Infinity;kick()},
+  redraw:size
+ };
+})();
 
 /* ---------------- UI ---------------- */
 const dots=$('#dots');CARS.forEach(()=>dots.append(document.createElement('i')));
@@ -690,10 +788,10 @@ $('#toRow').onclick=()=>setMode('row');
 $('#back').onclick=()=>{setMode('focus');hero.scrollIntoView({behavior:reduce?'auto':'smooth'})};
 $$('[data-order]').forEach(b=>b.onclick=()=>openOrder(S.idx));
 function openOrder(i){S.idx=i;setMode('cfg');hero.scrollIntoView({behavior:reduce?'auto':'smooth'})}
-$$('#views button').forEach(b=>b.onclick=()=>{S.view=b.dataset.v;$$('#views button').forEach(x=>x.classList.toggle('on',x===b));if(G){const v=G.VIEWS[S.view];G.orbit.az=v[0];G.orbit.el=v[1];G.goal()}});
+$$('#views button').forEach(b=>b.onclick=()=>{S.view=b.dataset.v;$$('#views button').forEach(x=>x.classList.toggle('on',x===b));TT.view(S.view);if(G){const v=G.VIEWS[S.view];G.orbit.az=v[0];G.orbit.el=v[1];G.goal()}});
 function nextColor(){const c=car();c.color=(c.color+1)%c.colors.length;if(G)G.setColor();hotspot()}
 $('#hotspot').onclick=nextColor;
-function hotspot(){const c=car();$('#hsDot').style.background=c.colors[c.color][1];$('#hsName').textContent=c.colors[c.color][0];$('#hotspot').classList.toggle('show',!!G)}
+function hotspot(){const c=car();$('#hsDot').style.background=c.colors[c.color][1];$('#hsName').textContent=c.colors[c.color][0];$('#hotspot').classList.toggle('show',!!G&&c.colors.length>1)}
 
 function isBusy(c,d){const off=Math.round((d-today)/864e5);return c.booked.includes(off)}
 function update(){
@@ -704,6 +802,7 @@ function update(){
  const busy=isBusy(c,today);const a=$('#cAvail');a.textContent=busy?'Dipakai hari ini':'Tersedia hari ini';a.classList.toggle('busy',busy);
  $('#cStats').innerHTML=`<div><b>${rpk(c.sopir)}</b><span>Dengan driver/6 jam</span></div><div><b>${rpk(c.lepas)}</b><span>Lepas kunci/hari</span></div><div><b>${c.kw} kW</b><span>Tenaga</span></div><div><b>${c.acc} dtk</b><span>0–100 km/jam</span></div>`;
  hotspot();
+ TT.set(c,S.mode!=='row');
  if(G)G.goal();
 }
 
@@ -813,17 +912,24 @@ function showSummary(o){
 const fleet=$('#fleet');
 CARS.forEach(c=>{const el=document.createElement('article');el.className='unit';
  el.innerHTML=`<div class="pic"><span class="n">${c.no}</span></div><div class="body"><h3>${c.nick}</h3><p class="t">${c.type}</p>
- <div class="chips"><span>${c.kw} kW</span><span>0–100 ${c.acc} dtk</span><span>${c.top} km/jam</span><span>${c.drive}</span><span>${c.colors.length} warna</span></div>
+ <div class="chips"><span>${c.kw} kW</span><span>0–100 ${c.acc} dtk</span><span>${c.top} km/jam</span><span>${c.drive}</span><span>${c.colors[0][0]}</span></div>
  <div class="price"><div><small>Dengan driver</small><b>${rpk(c.sopir)}</b><small>per 6 jam · lepas kunci ${rpk(c.lepas)}/hari</small></div>
  <button class="btn dark" type="button">Pesan</button></div></div>`;
  el.querySelector('button').onclick=()=>openOrder(c.i);c.card=el;fleet.append(el)});
 $$('#filters button').forEach(b=>b.onclick=()=>{$$('#filters button').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;
  CARS.forEach(c=>c.card.style.display=f==='all'||c.cat.includes(f)?'':'none')});
-if(G)G.ready.then(()=>{try{const t=G.thumbs();CARS.forEach((c,i)=>{if(!t[i])return;const img=new Image();img.alt=c.nick+', '+c.type;img.width=640;img.height=400;img.src=t[i];c.card.querySelector('.pic').append(img)})}catch(e){console.warn(e)}});
+CARS.forEach(c=>{const img=new Image();img.alt=c.nick+', '+c.type;img.width=640;img.height=360;img.loading='lazy';img.decoding='async';
+ img.onerror=()=>{img.parentNode&&img.parentNode.removeChild(img);c.needThumb=true};img.src='../media/rodaya/'+c.slug+'.jpg';c.card.querySelector('.pic').append(img)});
+if(G)G.ready.then(()=>{try{const t=G.thumbs();CARS.forEach((c,i)=>{if(!t[i]||!c.needThumb)return;const img=new Image();img.alt=c.nick+', '+c.type;img.width=640;img.height=400;img.src=t[i];c.card.querySelector('.pic').append(img)})}catch(e){console.warn(e)}});
 
 /* ---------- nav aktif ---------- */
-const navA=$$('nav.links a');
-['hero','armada','cara','faq','kontak'].forEach(id=>{const el=document.getElementById(id);el&&new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id))}),{rootMargin:'-45% 0px -50% 0px'}).observe(el)});
+const navA=$$('nav.links a, .mnav a');
+const mnav=$('#mnav'), menuBtn=$('#menuBtn');
+const setMenu=o=>{mnav.classList.toggle('open',o);menuBtn.setAttribute('aria-expanded',o)};
+menuBtn.onclick=()=>setMenu(!mnav.classList.contains('open'));
+mnav.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+['hero','armada','cara'].forEach(id=>{const el=document.getElementById(id);el&&new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id))}),{rootMargin:'-45% 0px -50% 0px'}).observe(el)});
 
 update();calc();
 })();
