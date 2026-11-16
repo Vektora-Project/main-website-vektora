@@ -387,9 +387,9 @@ const night=document.querySelector('.night');
 const hdrLight=()=>night.getBoundingClientRect().bottom<64;
 
 // ---------- The launch: the croissant turns with the scroll, then docks into the buy panel ----------
-// Frames: a 96-frame turntable rendered in Blender (media/fnb-bakery/croissant/c_000.webp …).
+// Frames: a 192-frame turntable (1.875° per frame) rendered in Blender (media/fnb-bakery/croissant/c_000.webp …).
 // If the frames aren't there, the cut-out photo turns instead.
-const FRAMES=96,canvas=$('#seq'),still=$('#still'),pin=$('#lPin'),stage=$('#stage'),buy=$('#buy');
+const FRAMES=192,canvas=$('#seq'),still=$('#still'),pin=$('#lPin'),stage=$('#stage'),buy=$('#buy');
 const specs=[...document.querySelectorAll('.spec')];
 let imgs=null,ctx=null,lastF=-1;
 (function probe(){
@@ -416,7 +416,7 @@ function launchTick(){
   // Turn: one and a half turns over the first 70% of the scroll.
   const turn=clamp(p/.72);
   // Target frame saja; frame yang digambar mengejar target dengan halus di spin() (scroll roda/trackpad tidak lompat-lompat).
-  if(imgs){fTarget=turn*FRAMES*1.5+20;if(!spinning){spinning=true;requestAnimationFrame(spin)}}
+  if(imgs){fTarget=turn*FRAMES*1.5+40;if(!spinning){spinning=true;requestAnimationFrame(spin)}}
   else{pin.style.setProperty('--rot',(Math.sin(turn*Math.PI*3)*14).toFixed(2)+'deg');pin.style.setProperty('--isc',(1+Math.sin(turn*Math.PI)*.06).toFixed(3))}
   pin.style.setProperty('--io',(1-clamp(p/.14)).toFixed(3));
   specs.forEach(s=>{const at=+s.dataset.at;s.classList.toggle('on',p>=at&&p<.7)});
@@ -431,7 +431,7 @@ function launchTick(){
   buy.classList.toggle('live',d>.6);
   hdr.classList.toggle('light',hdrLight()||mnav.classList.contains('on'));
 }
-let fTarget=20,fCur=20,spinning=false,spinT=0;
+let fTarget=40,fCur=40,spinning=false,spinT=0;
 function spin(now){
   const dt=spinT?Math.min(.05,(now-spinT)/1000):1/60;spinT=now;
   fCur+=(fTarget-fCur)*(reduce?1:1-Math.pow(.0015,dt));

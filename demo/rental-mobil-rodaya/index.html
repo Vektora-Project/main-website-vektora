@@ -32,7 +32,7 @@
    lima supercar di petak bernomor). Klik mobil untuk melihat detail, lalu pesan langsung dari website:
    pilih cara sewa atau paket, tanggal (cek jadwal unit), tambahan, lalu kirim pesanan ke WhatsApp.
    Mobil: lima model Sketchfab berlisensi CC BY 4.0 (daftar di sumber/rodaya/credits.txt), dirender di Blender
-   (studio, putaran 360° 48 frame) dan versi ringan GLB untuk garasi. Logo, emblem, dan pelat asli dihapus. */
+   (studio, putaran 360° 120 frame) dan versi ringan GLB untuk garasi. Logo, emblem, dan pelat asli dihapus. */
 :root{
   --bg:#0E1013; --bg-2:#15181D; --bg-3:#1D2128; --line:#2A2F38; --line-2:#3A404B;
   --ink:#F3F4F6; --ink-2:#C3C8D1; --muted:#8B929E;
@@ -489,7 +489,7 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MODEL_DIR='../models/', DRACO_DIR='../vendor/draco/';
 
 /* ---------------- data armada (fiktif) ----------------
-   sopir = dengan driver per 6 jam, lepas = lepas kunci per 24 jam. Foto putar: site/media/rodaya/<slug>/t_000..047.webp, GLB: site/models/<slug>.glb. */
+   sopir = dengan driver per 6 jam, lepas = lepas kunci per 24 jam. Foto putar: site/media/rodaya/<slug>/t_000..119.webp, GLB: site/models/<slug>.glb. */
 const CARS=[
  {id:'kapur',slug:'gt-putih',nick:'Kapur',type:'GT coupe untuk sirkuit · 2 kursi',desc:'Sayap belakang besar, kap serat karbon, dan mesin enam silinder 4.0 liter yang berputar sampai 9.000 rpm. Paling sering dipesan untuk track day.',cat:['track','foto','harian'],kw:386,acc:'3,2',top:296,drive:'Flat-6 4.0 L, RWD',year:2024,sopir:9e6,lepas:24e6,
   colors:[['Putih kapur','#E9E9E6']],booked:[2,3,9]},
@@ -707,12 +707,13 @@ function init3D(){
 }
 
 /* ---------------- foto studio 360° ----------------
-   Tiap mobil punya 48 foto render (7,5° per frame). Dipakai saat mobil dipilih: bisa digeser untuk memutar,
-   antar-frame dibaurkan supaya putarannya halus. Garasi 3D di belakangnya dijeda supaya hemat baterai. */
+   Tiap mobil punya 120 foto render (3° per frame). Dipakai saat mobil dipilih: bisa digeser untuk memutar,
+   dan berputar sendiri dengan kecepatan tetap (15 frame/detik, satu putaran 8 detik). Satu foto utuh per
+   langkah, tanpa pembauran, supaya tidak ada bayangan ganda. Garasi 3D di belakangnya dijeda supaya hemat baterai. */
 const TT=(()=>{
- const F=48, wrap=$('#tt'), cv=$('#ttCv'), g=cv.getContext('2d');
- const VIEW={q:0,f:6,s:18,r:30};
- let c=null,on=false,pos=0,want=0,drag=null,idleAt=0,raf=0,W=1,H=1,dpr=1,last=0;
+ const F=120, SPIN=15, wrap=$('#tt'), cv=$('#ttCv'), g=cv.getContext('2d');
+ const VIEW={q:0,f:15,s:45,r:75};
+ let c=null,on=false,pos=0,want=0,drag=null,idleAt=0,raf=0,W=1,H=1,dpr=1,last=0,lastFr=-1;
  const url=(k,i)=>`../media/rodaya/${k.slug}/t_${String(i).padStart(3,'0')}.webp`;
  function load(k){
   if(k.fr)return;k.fr=[];
@@ -732,9 +733,8 @@ const TT=(()=>{
   if(wide){if(focus&&desk){sc=Math.min(W*.68/1280,H/720*.95);cx=W*.655}else{sc=Math.min(W/1280,H/720*.98);cx=W/2}cy=H*.5}
   else{sc=W/1280*1.02;cx=W/2;cy=H*.46;
    if(focus){const top=(wrap.getBoundingClientRect().top),ct=$('#card').getBoundingClientRect().top-top;cy=Math.max(90,(100+ct)/2)*dpr}}
-  const dw=1280*sc,dh=720*sc,x=cx-dw/2,y=cy-dh/2,i0=Math.floor(pos),f=pos-i0;
+  const dw=1280*sc,dh=720*sc,x=cx-dw/2,y=cy-dh/2,i0=Math.round(pos);
   const a=at(i0)||near(i0);if(a)g.drawImage(a,x,y,dw,dh);
-  const b=at(i0+1);if(a&&b&&f>.01){g.globalAlpha=f;g.drawImage(b,x,y,dw,dh);g.globalAlpha=1}
   // cahaya lembut di belakang mobil; mobil gelap (karbon) diberi sedikit lebih banyak supaya siluetnya terbaca
   {const r=g.createRadialGradient(cx,y+dh*.42,0,cx,y+dh*.42,dw*.42),v=c.glow||.10;r.addColorStop(0,`rgba(150,156,172,${v})`);r.addColorStop(1,'rgba(150,156,172,0)');
    g.globalCompositeOperation='screen';g.fillStyle=r;g.fillRect(x,y,dw,dh);g.globalCompositeOperation='source-over'}
@@ -745,13 +745,13 @@ const TT=(()=>{
   if(y+dh<H){g.fillStyle='#050506';g.fillRect(0,y+dh-1,W,H);fe(0,y+dh*.78,0,y+dh,0,y+dh*.78,W,dh*.22+1)}
   if(y>0){g.fillStyle='#050506';g.fillRect(0,0,W,y+1)}
  }
- function kick(){if(!raf&&on){last=performance.now();raf=requestAnimationFrame(tick)}}
+ function kick(){lastFr=-1;if(!raf&&on){last=performance.now();raf=requestAnimationFrame(tick)}}
  function tick(now){
   raf=0;if(!on)return;const dt=Math.min(.05,(now-last)/1000);last=now;
   const spin=!reduce&&!drag&&S.mode==='focus'&&now>idleAt;
-  if(spin)want+=dt*2.4;
-  const k=reduce?1:1-Math.pow(.0008,dt);pos+=(want-pos)*k;
-  draw();
+  // Putaran otomatis: langsung maju dengan kecepatan tetap. Geser/tombol tampak: mengejar target dengan halus.
+  if(spin){want+=dt*SPIN;pos=want}else{const k=reduce?1:1-Math.pow(.0008,dt);pos+=(want-pos)*k}
+  const fr=Math.round(pos);if(fr!==lastFr||!spin){lastFr=fr;draw()}
   if(spin||drag||Math.abs(want-pos)>.002||!c.fr.every(im=>im.ok))raf=requestAnimationFrame(tick);
  }
  cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,w:want,moved:false};wrap.classList.add('drag');if(e.pointerType==='mouse')cv.setPointerCapture(e.pointerId);kick()});
@@ -761,7 +761,7 @@ const TT=(()=>{
   if(!d.moved&&S.mode==='focus')setMode('cfg');kick()};
  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
  cv.tabIndex=0;cv.setAttribute('role','img');
- cv.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){want+=3;kick()}if(e.key==='ArrowLeft'){want-=3;kick()}});
+ cv.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){want+=7;kick()}if(e.key==='ArrowLeft'){want-=7;kick()}});
  new ResizeObserver(size).observe(wrap);
  function show(v){
   on=v&&!!c&&!c.noTT;hero.classList.toggle('tt-on',on);if(G)G.pause(on);
